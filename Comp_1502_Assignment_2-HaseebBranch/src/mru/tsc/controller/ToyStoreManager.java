@@ -1,16 +1,78 @@
 package mru.tsc.controller;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import mru.tsc.model.Toy;
 
 public class ToyStoreManager {
 
-	
-	private void selectLogic (ArrayList<Toy> searchedList) {
-		int maxSize; //WIP
+	ArrayList<Toy> toyList;
+	Scanner input;
+	private void addToy() { //WIP 
+//		input = new Scanner(System.in);
 		
-		maxSize = searchedList.size(); //WIP
+		ArrayList<Toy> sameSNList;
+		
+		String toyName;
+		String toyBrand;
+		double toyPrice;
+		int count;
+		int age;
+		
+		
+		System.out.println("enter SN: "); //temporary placeholder
+		sameSNList = compareSNToAllToys(null); //a list containing an item with the same serial number
+		
+		if (sameSNList.isEmpty()) System.out.println("SN must be unique!!"); //placeholder to call menu class
+		
+		/*
+		 * 
+		 * will use alex's method to add
+		 * 
+		 */
+		
+		
+	}
+	
+	
+	private void removeToy() {
+		int indexInDataBase ;
+		ArrayList<Toy> sameSNList;
+		
+		while (true){
+			System.out.println("enter SN: ");//placeholder to call menu class for display and input
+				//validating a valid Serial number method goes here
+			
+			sameSNList = compareSNToAllToys(null); //a list containing an item with the same serial number
+			if (sameSNList.isEmpty()) System.out.println("Toy not found!"); //placeholder to call menu class
+			
+			else break;
+		}
+
+		sameSNList.get(0).toString(); //print the description of the toy
+		System.out.println("do you want to remove y/n?: "); //placeholder to call menu class
+		indexInDataBase = toyList.indexOf(sameSNList.get(0)); //get the object in the sameSNList and get the index for that object within the DataBase
+		toyList.remove(indexInDataBase);
+		
+		System.out.println("object removed!"); //placeholder to call menu class
+		System.out.println("press enter to continue"); //placeholder to call menu class
+	}
+	
+	/**
+	 * validates the user input when selecting an item to purchase
+	 * 
+	 * The amount of items displayed is the maximum number that the user can enter
+	 * and cannot enter a number that is bigger or less than the maximum number displayed
+	 * 
+	 * @param searchedList the list of toys that shows when searching up an item
+	 * @return the toy object that the user selected
+	 */
+	private Toy selectValidation (ArrayList<Toy> searchedList, String userInput) {
+		int maxSearchedListSize;
+		maxSearchedListSize = searchedList.size(); //WIP
+		
+		
 		
 		
 	}
@@ -35,11 +97,11 @@ public class ToyStoreManager {
 	 * @param searchedList the list containing the toys in the database as an ArrayList Class
 	 */
 	private void displayToyList(ArrayList<Toy> searchedList) {
-		int maxSize;
-		
-		maxSize = searchedList.size(); //WIP
-		
+
+		int count = 0;
 		for (Toy toy : searchedList) {
+			count ++;
+			//There should be a menu call here that takes in count
 			System.out.println(toy.toString()); // TEMPORARY PLACEHOLDER TO CALL MENU CLASS
 			
 		}
@@ -66,7 +128,7 @@ public class ToyStoreManager {
 		String currentSN;
 		
 		for (Toy toy : toyList) { // read each object in list, then do a getSN to get the serial number
-			currentSN = toy.getSN();
+			currentSN = toy.getSerialNum();
 			
 			if (serialNumber == currentSN) toySNList.add(toy);  //compare SN to database SN, if true  add to a list to return
 		}
@@ -107,7 +169,7 @@ public class ToyStoreManager {
 		String currentType;
 		
 		for (Toy toy : toyList) { 									 		// read each object in list
-			if (toy.getTypeString().equals(type)) toyTypeList.add(toy); 	 // if an object is a specific type then add to a list, then return that list
+			if (toy.typeOf().equals(type)) toyTypeList.add(toy); 	 // if an object is a specific type then add to a list, then return that list
 		}
 		
 		return toyTypeList;
