@@ -9,10 +9,27 @@ public class ToyStoreManager {
 
 	ArrayList<Toy> toyList;
 	Scanner input;
+	
+	/**
+	 * This constructor initializes..........
+	 */
+	public ToyStoreManager() {
+		this.input = new Scanner(System.in);
+	}
+	
+	/**
+	 * This method adds a toy in the database
+	 * 
+	 * It first asks the user to enter a serial number
+	 * that serial number is validated and matched with the matching toy type
+	 * then promts the user to enter the specific toy data related to the type
+	 * finally, it calls a method from the ToyStorageDB class that gives all the type information into that method that adds it to the database
+	 * 
+	 */
 	private void addToy() { //WIP 
-//		input = new Scanner(System.in);
 		
 		ArrayList<Toy> sameSNList;
+		String userSerialNumber; // can be changed to int later if needed
 		
 		String toyName;
 		String toyBrand;
@@ -20,11 +37,17 @@ public class ToyStoreManager {
 		int count;
 		int age;
 		
-		
+		while(true) { // should add try catch
 		System.out.println("enter SN: "); //temporary placeholder
-		sameSNList = compareSNToAllToys(null); //a list containing an item with the same serial number
+		userSerialNumber = input.nextLine(); //temporary must validate SN
 		
-		if (sameSNList.isEmpty()) System.out.println("SN must be unique!!"); //placeholder to call menu class
+		sameSNList = compareSNToAllToys(userSerialNumber); //a list containing an item with the same serial number
+		
+		
+			if (!sameSNList.isEmpty()) System.out.println("SN must be unique!!"); //placeholder to call menu class should throw error
+			else break;
+		}
+		
 		
 		/*
 		 * 
@@ -32,19 +55,32 @@ public class ToyStoreManager {
 		 * 
 		 */
 		
+
+		
 		
 	}
 	
-	
+	/**
+	 * this method removes a toy from the database
+	 * 
+	 * It first asks for a serial number then validates if that serial number matcher with any serial number in the database.
+	 * The index of the matching toy with the same serial number is then located in the database and removes that object in that index
+	 */
 	private void removeToy() {
 		int indexInDataBase ;
+		String userSerialNumber; // can be changed to int later if needed
 		ArrayList<Toy> sameSNList;
 		
 		while (true){
 			System.out.println("enter SN: ");//placeholder to call menu class for display and input
-				//validating a valid Serial number method goes here
+			userSerialNumber = input.nextLine();
+				/*
+				 * 
+				 * validating a valid Serial number method goes here
+				 * 
+				 */
 			
-			sameSNList = compareSNToAllToys(null); //a list containing an item with the same serial number
+			sameSNList = compareSNToAllToys(userSerialNumber); //a list containing an item with the same serial number // null is placeholder for userinput for SN
 			if (sameSNList.isEmpty()) System.out.println("Toy not found!"); //placeholder to call menu class
 			
 			else break;
@@ -66,11 +102,20 @@ public class ToyStoreManager {
 	 * and cannot enter a number that is bigger or less than the maximum number displayed
 	 * 
 	 * @param searchedList the list of toys that shows when searching up an item
+	 * @param userSelectionInput
 	 * @return the toy object that the user selected
 	 */
-	private Toy selectValidation (ArrayList<Toy> searchedList, String userInput) {
+	private Toy selectValidation (ArrayList<Toy> searchedList, int userSelectionInput) {
 		int maxSearchedListSize;
+		
 		maxSearchedListSize = searchedList.size(); //WIP
+		
+		if (userSelectionInput > maxSearchedListSize || userSelectionInput <0) { //try catch error exception
+			//throw new exception
+		}
+		else {
+			
+		}
 		
 		
 		
@@ -83,7 +128,7 @@ public class ToyStoreManager {
 	 * @param toy the toy that the user chooses to buy
 	 */
 	private void purchase(Toy toy) {
-		if (toy.getCount() > 0) {
+		if (toy.getCount() > 0) { //probably need try catch error exception
 			toy.decrement(); //if theres at least one toy available and the user wants to purchase then remove one count from the DB
 			System.out.println("Succesfully Purchased"); //temporary placeholder to call menu class
 		}
@@ -130,7 +175,7 @@ public class ToyStoreManager {
 		for (Toy toy : toyList) { // read each object in list, then do a getSN to get the serial number
 			currentSN = toy.getSerialNum();
 			
-			if (serialNumber == currentSN) toySNList.add(toy);  //compare SN to database SN, if true  add to a list to return
+			if (serialNumber.equals(currentSN)) toySNList.add(toy);  //compare SN to database SN, if true  add to a list to return
 		}
 		
 		return toySNList;
