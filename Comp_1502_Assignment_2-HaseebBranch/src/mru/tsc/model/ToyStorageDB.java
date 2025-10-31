@@ -74,34 +74,63 @@ public class ToyStorageDB {
 		}
 	}
 
-	public Toy findToySerialnum(String serialnum) {
-
-		for (Toy toy : toydb) {
-			if (toy.getSerialNum().equals(serialnum)) { // Assuming Toy has a getSerialNum() method
-				// If a matching serial number is found, return it
-				return toy;
-			}
+	/**
+	 * This method compares the given serial number to all serial number in the database and returns a matching serial number
+	 * 
+	 * @param serialNumber the serial number given by the user
+	 * @return the toy object
+	 */
+	public ArrayList<Toy> compareSNToAllToys(String serialNumber) {
+		ArrayList<Toy> toySNList = new ArrayList<Toy>();
+		String currentSN;
+		
+		for (Toy toy : toydb) { // read each object in list, then do a getSN to get the serial number
+			currentSN = toy.getSerialNum();
+			
+			if (serialNumber.equals(currentSN)) toySNList.add(toy);  //compare SN to database SN, if true  add to a list to return
 		}
-		// If no matching serial number is found after searching through toydb, return
-		// null
-		return null;
+		
+		return toySNList;
+		
 	}
 
-	public ArrayList<Toy> findToyName(String name) {
-		ArrayList<Toy> foundToys = new ArrayList();
-		for (Toy toy : toydb) {
-			if (toy.getName().trim().toLowerCase().contains(name)) {
-				// If a matching serial number is found, return it
-				foundToys.add(toy);
-			}
+	/**
+	 * This method compares the a given name to all names in the database and returns a list containing that all toys with that string sequence
+	 * 
+	 * @param name the name given by the user
+	 * @return an arraylist that contains all toys with matching string sequence that was given by the user
+	 */
+	public ArrayList<Toy> compareNameToAllToys(String name) {
+		ArrayList<Toy> toyNameList = new ArrayList<Toy>();
+		
+		String currentName;
+		
+		for (Toy toy : toydb) { // read each object in list, then do a getName the Name
+			currentName = toy.getName();
+			
+			if (currentName.contains(name)) toyNameList.add(toy);  //compare Name to database Name, if true  add to a list to return
 		}
-		// If no matching serial number is found after searching through toydb, return
-		// null
-		if (foundToys.size() == 0) {
-			return null;
-		} else {
-			return foundToys;
+		
+		return toyNameList;
+	}
+
+	
+	/**
+	 * This method checks if a given type is the same as an object in the database and returns a list with all toys with the same type
+	 * 
+	 * @param type the object type name that the user provides
+	 * @return a list of toys with the same object type
+	 */
+	public ArrayList<Toy> compareTypeToAllToys (String type) { 
+		ArrayList<Toy> toyTypeList = new ArrayList<Toy>();
+		
+		String currentType;
+		
+		for (Toy toy : toydb) { 									 		// read each object in list
+			if (toy.typeOf().equals(type)) toyTypeList.add(toy); 	 // if an object is a specific type then add to a list, then return that list
 		}
+		
+		return toyTypeList;
 	}
 
 	public void removeData(Toy toy) throws Exception {
@@ -115,20 +144,7 @@ public class ToyStorageDB {
 		toydb.add(toy);
 
 	}
-	//this class that uses the a built in method add 
-
-	public ArrayList<Toy> findByType(String typeToSearchFor) {
-		ArrayList<Toy> results = new ArrayList<>();
-		for (Toy toy : toydb) {
-			if (toy.typeOf().equals(typeToSearchFor)) {
-
-			}
-
-		}
-
-		return results;
-	}
-
+	
 	public String toString() {
 		StringBuilder formattedData = new StringBuilder();
 

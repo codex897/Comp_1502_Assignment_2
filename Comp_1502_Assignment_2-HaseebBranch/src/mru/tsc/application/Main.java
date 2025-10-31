@@ -1,9 +1,11 @@
 package mru.tsc.application;
 
+import mru.tsc.controller.ToyStoreManager;
+
 public class Main {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+		ToyStoreManager TSM = new ToyStoreManager();
 
 	}
 

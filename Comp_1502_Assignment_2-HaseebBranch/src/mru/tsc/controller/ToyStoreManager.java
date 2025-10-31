@@ -3,22 +3,32 @@ package mru.tsc.controller;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import mru.tsc.model.Toy;
+import mru.tsc.model.*;
 
 public class ToyStoreManager {
 
 	ArrayList<Toy> toyList;
 	Scanner input;
+	ToyStorageDB toyStorageDB; 
+	
+	final String FILE_PATH = "res/toys.txt" ;
 	
 	/**
 	 * This constructor initializes..........
 	 */
 	public ToyStoreManager() {
 		this.input = new Scanner(System.in);
+		
+		try {
+			toyStorageDB =  new ToyStorageDB(FILE_PATH);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
 	}
 	
 	/**
-	 * This method adds a toy in the database
+	 * This method promts and adds a toy in the database
 	 * 
 	 * It first asks the user to enter a serial number
 	 * that serial number is validated and matched with the matching toy type
@@ -41,7 +51,7 @@ public class ToyStoreManager {
 		System.out.println("enter SN: "); //temporary placeholder
 		userSerialNumber = input.nextLine(); //temporary must validate SN
 		
-		sameSNList = compareSNToAllToys(userSerialNumber); //a list containing an item with the same serial number
+		sameSNList = toyStorageDB.compareSNToAllToys(userSerialNumber); //a list containing an item with the same serial number
 		
 		
 			if (!sameSNList.isEmpty()) System.out.println("SN must be unique!!"); //placeholder to call menu class should throw error
@@ -61,7 +71,7 @@ public class ToyStoreManager {
 	}
 	
 	/**
-	 * this method removes a toy from the database
+	 * this method promts and removes a toy from the database
 	 * 
 	 * It first asks for a serial number then validates if that serial number matcher with any serial number in the database.
 	 * The index of the matching toy with the same serial number is then located in the database and removes that object in that index
@@ -80,7 +90,7 @@ public class ToyStoreManager {
 				 * 
 				 */
 			
-			sameSNList = compareSNToAllToys(userSerialNumber); //a list containing an item with the same serial number // null is placeholder for userinput for SN
+			sameSNList = toyStorageDB.compareSNToAllToys(userSerialNumber); //a list containing an item with the same serial number // null is placeholder for userinput for SN
 			if (sameSNList.isEmpty()) System.out.println("Toy not found!"); //placeholder to call menu class
 			
 			else break;
@@ -162,63 +172,11 @@ public class ToyStoreManager {
 		
 	}
 	
-	/**
-	 * This method compares the given serial number to all serial number in the database and returns a matching serial number
-	 * 
-	 * @param serialNumber the serial number given by the user
-	 * @return the toy object
-	 */
-	private ArrayList<Toy> compareSNToAllToys(String serialNumber) {
-		ArrayList<Toy> toySNList = new ArrayList<Toy>();
-		String currentSN;
-		
-		for (Toy toy : toyList) { // read each object in list, then do a getSN to get the serial number
-			currentSN = toy.getSerialNum();
-			
-			if (serialNumber.equals(currentSN)) toySNList.add(toy);  //compare SN to database SN, if true  add to a list to return
-		}
-		
-		return toySNList;
-		
-	}
+
 	
-	/**
-	 * This method compares the a given name to all names in the database and returns a list containing that all toys with that string sequence
-	 * 
-	 * @param name the name given by the user
-	 * @return an arraylist that contains all toys with matching string sequence that was given by the user
-	 */
-	private ArrayList<Toy> compareNameToAllToys(String name) {
-		ArrayList<Toy> toyNameList = new ArrayList<Toy>();
-		
-		String currentName;
-		
-		for (Toy toy : toyList) { // read each object in list, then do a getName the Name
-			currentName = toy.getName();
-			
-			if (currentName.contains(name)) toyNameList.add(toy);  //compare Name to database Name, if true  add to a list to return
-		}
-		
-		return toyNameList;
-	}
+
 	
-	/**
-	 * This method checks if a given type is the same as an object in the database and returns a list with all toys with the same type
-	 * 
-	 * @param type the object type name that the user provides
-	 * @return a list of toys with the same object type
-	 */
-	private ArrayList<Toy> compareTypeToAllToys (String type) { 
-		ArrayList<Toy> toyTypeList = new ArrayList<Toy>();
-		
-		String currentType;
-		
-		for (Toy toy : toyList) { 									 		// read each object in list
-			if (toy.typeOf().equals(type)) toyTypeList.add(toy); 	 // if an object is a specific type then add to a list, then return that list
-		}
-		
-		return toyTypeList;
-	}
+
 
 	
 	
