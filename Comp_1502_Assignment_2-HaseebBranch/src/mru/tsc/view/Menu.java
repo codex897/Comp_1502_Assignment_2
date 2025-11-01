@@ -18,7 +18,7 @@ public class Menu {
 	
 	
 	
-	public Figure promptAddFigure(String serialNumber) {
+	public Figure messageAddFigure(String serialNumber) {
 		System.out.print("Enter Toy Name: ");
 		String name = input.nextLine().trim();
 		System.out.print("Enter Toy Brand: ");
@@ -102,5 +102,24 @@ public class Menu {
 		char type = input.next().charAt(0);
 
 		return new Puzzle(serialNumber, name, brand, price, count, age, type);
+	}
+
+
+
+
+
+	public String askSerialNumber() {
+		//please validate serial number and return value
+		String serial = null;
+		return serial;
+	}
+
+
+
+
+
+	public void toyAddMessage() {
+		// TODO Auto-generated method stub
+		
 	}
 }

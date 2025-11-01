@@ -82,6 +82,17 @@ public abstract class Toy {
 		return serialNum + ";" + name + ";" + brand + ";" + price + ";" + count + ";" + ageAllowed;
 	}
 
+	public int toyDecrement() {
+		return count-=1;
+		
+	}
+	
+	@Override
+	public String toString() {
+	    return "Toy name: " + name + ", Price: $" + price;
+	}
+
+
 
 
 }

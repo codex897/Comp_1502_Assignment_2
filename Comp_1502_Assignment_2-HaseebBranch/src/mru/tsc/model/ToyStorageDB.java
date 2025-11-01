@@ -158,5 +158,10 @@ public class ToyStorageDB {
 		return formattedData.toString();
 	}
 
+	public Object findToySerialnum(String serialNumber) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
 
