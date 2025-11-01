@@ -4,12 +4,14 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import mru.tsc.model.*;
+import mru.tsc.view.Menu;
 
 public class ToyStoreManager {
 
 	ArrayList<Toy> toyList;
 	Scanner input;
-	ToyStorageDB toyStorageDB; 
+	ToyStorageDB toyStorageDB;
+	Menu menu;
 	
 	final String FILE_PATH = "res/toys.txt" ;
 	
@@ -139,12 +141,39 @@ public class ToyStoreManager {
 	 */
 	private void purchase(Toy toy) {
 		if (toy.getCount() > 0) { //probably need try catch error exception
-			toy.decrement(); //if theres at least one toy available and the user wants to purchase then remove one count from the DB
+			toy.toyDecrement(); //if theres at least one toy available and the user wants to purchase then remove one count from the DB
 			System.out.println("Succesfully Purchased"); //temporary placeholder to call menu class
 		}
 		else System.out.println("Error: out of stock"); //temporary placeholder to call menu class
 	}
 	
+	private void findSystemToy() throws Exception {
+		boolean validSerialNumber;
+		String serialNumber;
+
+		do {
+			serialNumber = menu.promptSerialNumber(); // Asks the user to give a serial number.
+			validSerialNumber = toyStorageDB.findToySerialnum(serialNumber) == null;
+
+		} while (!validSerialNumber);
+
+		// Checks the first character of the serial number to determine what type of toy
+		if (serialNumber.charAt(0) == '1' || serialNumber.charAt(0) == '0') {
+			Figure figResult = menu.messageAddFigure(serialNumber);
+			toyStorageDB.add(figResult);
+		} else if ((serialNumber.charAt(0) == '2' || serialNumber.charAt(0) == '3')) {
+			Animal animalResult = menu.messageAddAnimal(serialNumber);
+			toyStorageDB.add(animalResult);
+		} else if (serialNumber.charAt(0) == '4' || serialNumber.charAt(0) == '5' || serialNumber.charAt(0) == '6') {
+			Puzzle puzzleResult = menu.messageAddPuzzle(serialNumber);
+			toyStorageDB.add(puzzleResult);
+		} else {
+			BoardGame bgResult = menu.messageAddBoardGame(serialNumber);
+			toyStorageDB.add(bgResult);
+		}
+		menu.toyAddMessage(); // Tells the user that the toy has been added.
+	}
+
 	
 	/**
 	 * This method displays the list of toys that matches the users search by calling the menu class to print
@@ -161,6 +190,8 @@ public class ToyStoreManager {
 			
 		}
 	}
+	
+
 	
 	/**
 	 * This method displays a single of toys that matches the users search by calling the menu class to print
