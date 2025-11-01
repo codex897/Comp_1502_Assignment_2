@@ -129,10 +129,122 @@ public class ToyStoreManager {
 			
 		}
 		
-		
-		
-		
 	}
+	
+	public void addData() throws Exception {
+	    File toyFile = new File(FILE_PATH);
+
+	    if (!toyFile.exists()) {
+	        return; // Exit early if file doesn’t exist
+	    }
+
+	    Scanner fileReader = new Scanner(toyFile);
+
+	    while (fileReader.hasNextLine()) {
+	        String currentLine = fileReader.nextLine();
+	        String[] splittedLine = currentLine.split(";");
+
+	        String toyType = getToyType(splittedLine[0]);
+	        Toy currentToy = null;
+
+	        if (toyType.equals("Figure")) {
+	            currentToy = createFigure(splittedLine);
+	        } 
+	        else if (toyType.equals("Animal")) {
+	            currentToy = createAnimal(splittedLine);
+	        } 
+	        else if (toyType.equals("Puzzle")) {
+	            currentToy = createPuzzle(splittedLine);
+	        } 
+	        else if (toyType.equals("BoardGame")) {
+	            currentToy = createBoardGame(splittedLine);
+	        }
+
+	        if (currentToy != null) {
+	        	toyStorageDB.add(currentToy);
+	        }
+	    }
+
+	    fileReader.close();
+	}
+	
+	private String getToyType(String serialNum) {
+	    if (serialNum == null || serialNum.isEmpty()) {
+	        return "error";
+	    }
+
+	    char firstChar = serialNum.charAt(0);
+
+	    if (firstChar == '0' || firstChar == '1')
+	        return "Figure";
+	    else if (firstChar == '2' || firstChar == '3')
+	        return "Animal";
+	    else if (firstChar == '4' || firstChar == '5' || firstChar == '6')
+	        return "Puzzle";
+	    else if (firstChar == '7' || firstChar == '8' || firstChar == '9')
+	        return "BoardGame";
+	    else
+	        return "error";
+	}
+
+	
+	
+	
+	private Toy createFigure(String[] data) {
+	    String serialNum = data[0];
+	    String name = data[1];
+	    String brand = data[2];
+	    double price = Double.parseDouble(data[3]);
+	    int count = Integer.parseInt(data[4]);
+	    int age = Integer.parseInt(data[5]);
+	    char classification = data[6].charAt(0);
+
+	    return new Figure(serialNum, name, brand, price, count, age, classification);
+	}
+	private Toy createAnimal(String[] data) {
+	    String serialNum = data[0];
+	    String name = data[1];
+	    String brand = data[2];
+	    double price = Double.parseDouble(data[3]);
+	    int count = Integer.parseInt(data[4]);
+	    int age = Integer.parseInt(data[5]);
+	    String material = data[6];
+	    char size = data[7].charAt(0);
+
+	    return new Animal(serialNum, name, brand, price, count, age, material, size);
+	}
+	
+	private Toy createPuzzle(String[] data) {
+	    String serialNum = data[0];
+	    String name = data[1];
+	    String brand = data[2];
+	    double price = Double.parseDouble(data[3]);
+	    int count = Integer.parseInt(data[4]);
+	    int age = Integer.parseInt(data[5]);
+	    char puzzleType = data[6].charAt(0);
+
+	    return new Puzzle(serialNum, name, brand, price, count, age, puzzleType);
+	}
+	private Toy createBoardGame(String[] data) {
+	    String serialNum = data[0];
+	    String name = data[1];
+	    String brand = data[2];
+	    double price = Double.parseDouble(data[3]);
+	    int count = Integer.parseInt(data[4]);
+	    int age = Integer.parseInt(data[5]);
+	    String[] minMaxPlayers = data[6].split("-");
+	    int minPlayers = Integer.parseInt(minMaxPlayers[0]);
+	    int maxPlayers = Integer.parseInt(minMaxPlayers[1]);
+	    String designers = data[7];
+
+	    return new BoardGame(serialNum, name, brand, price, count, age, minPlayers, maxPlayers, designers);
+	}
+
+
+
+
+	
+	
 	
 	/**
 	 * This method decrements the item that the user wants to purchase if there is at least one count of that object
@@ -152,7 +264,7 @@ public class ToyStoreManager {
 		String serialNumber;
 
 		do {
-			serialNumber = menu.promptSerialNumber(); // Asks the user to give a serial number.
+			serialNumber = menu.askSerialNumber(); // Asks the user to give a serial number.
 			validSerialNumber = toyStorageDB.findToySerialnum(serialNumber) == null;
 
 		} while (!validSerialNumber);
