@@ -295,6 +295,7 @@ public class ToyStoreManager {
 			  	age = Integer.parseInt(ageString); //return this value unless invalid return max to get all toys
 			  	if (age <= 0) {
 			  		System.out.println("invalid age, setting age field as default"); //empty means all there is not age limit
+			  		age = Integer.MAX_VALUE;
 			  	}
 
 			} catch (Exception e) {
@@ -325,6 +326,7 @@ public class ToyStoreManager {
 				minPrice = Double.parseDouble(minPriceString);
 				if (minPrice < 0.0 ) {
 					System.out.println("Cannot be negative number, seeting  field to default");
+					minPrice = 0.0;
 					//just set to zero if its a negative doesnt make a difference
 				}
 			} catch (Exception e) {
