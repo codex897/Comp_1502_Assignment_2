@@ -20,7 +20,7 @@ public class ToyStoreManager {
 	 */
 	public ToyStoreManager() {
 		this.input = new Scanner(System.in);
-		
+		menu = new Menu();
 		try {
 			toyStorageDB =  new ToyStorageDB(FILE_PATH);
 		} catch (Exception e) {
@@ -28,9 +28,49 @@ public class ToyStoreManager {
 			e.printStackTrace();
 		}	
 		
-		toyList = ToyStorageDB.getToyDB;
+		toyList = toyStorageDB.getToyDB();
+		
+		startMenu();
+		
 	}
 	
+	private void startMenu() {
+		while(true) {
+			String userOption = menu.displayMainMenu(); // no validation yet
+			switch (userOption) {
+			case "1":
+				searchInventory();
+				
+				break;
+			case "2":
+				addNewToy();
+				break;
+			case "3":
+				removeToy();
+				break;
+			case "4":
+				
+				saveExit();
+				break;
+				
+
+			default:
+				break;
+			}
+		}
+		
+	}
+
+	private void saveExit() {
+		System.out.println("testtEXITTt");
+		
+	}
+
+	private void searchInventory() {
+		System.out.println("testtt");
+		
+	}
+
 	/**
 	 * This method promts and adds a toy in the database
 	 * 
@@ -40,40 +80,100 @@ public class ToyStoreManager {
 	 * finally, it calls a method from the ToyStorageDB class that gives all the type information into that method that adds it to the database
 	 * 
 	 */
-	private void addToy() { //WIP 
+	private void addNewToy() { //WIP 
 		
 		ArrayList<Toy> sameSNList;
 		String userSerialNumber; // can be changed to int later if needed
-		
-		String toyName;
-		String toyBrand;
-		double toyPrice;
-		int count;
-		int age;
-		
-		while(true) { // should add try catch
-		System.out.println("enter SN: "); //temporary placeholder
-		userSerialNumber = input.nextLine(); //temporary must validate SN
-		
-		sameSNList = toyStorageDB.compareSNToAllToys(userSerialNumber); //a list containing an item with the same serial number
-		
-		
+		while(true) { // should add try catch 
+			System.out.println("enter SN: "); //temporary placeholder
+			userSerialNumber = input.nextLine(); //temporary must validate SN
+			sameSNList = toyStorageDB.compareSNToAllToys(userSerialNumber); //a list containing an item with the same serial number
 			if (!sameSNList.isEmpty()) System.out.println("SN must be unique!!"); //placeholder to call menu class should throw error
 			else break;
 		}
 		
+		String toyType = toyStorageDB.getToyType(userSerialNumber);
 		
 		/*
-		 * 
-		 * will use alex's method to add
-		 * 
+		 * create the toy type by using the toy data from user
 		 */
+		if(toyType.equals("Figure")) { //takes in the serial number and checks for specific type of toy
+			
+			toyStorageDB.createFigure(askFigureData(userSerialNumber));
+		}
 		
-
+		else if(toyType.equals("Animal") ){ //takes in the serial number and checks for specific type
+			
+			toyStorageDB.createAnimal(askAnimalData(userSerialNumber));
+		}
 		
+		else if(toyType.equals("Puzzle") ){ //takes in the serial number and checks for specific type
+			
+			toyStorageDB.createPuzzle(askPuzzleData(userSerialNumber));
+		}
+		
+		else if(toyType.equals("BoardGame") ){ //takes in the serial number and checks for specific type
+	
+			toyStorageDB.createBoardGame(askBoardGameData(userSerialNumber));
+		}
 		
 	}
 	
+	private String[] askBoardGameData(String serialNum) {
+		// TODO Auto-generated method stub
+		String name = menu.askNameInput();
+	    String brand = menu.askBrandInput();
+	    String price = Double.toString(menu.askPriceInput()) ;
+	    String count = Integer.toString(menu.askCountInput()) ;
+	    String age = Integer.toString(menu.askAgeInput()) ;
+	    String minPlayers = Integer.toString(menu.askMinPlayersInput());
+	    String maxPlayers = Integer.toString(menu.askMaxPlayersInput());
+	    String designers = menu.askDesignerNamesInput();
+
+	    return new String[]{serialNum, name, brand, price, count, age, minPlayers + "-" + maxPlayers, designers};
+		
+	}
+
+	private String[] askPuzzleData(String serialNum) {
+		// TODO Auto-generated method stub
+		String name = menu.askNameInput();
+	    String brand = menu.askBrandInput();
+	    String price = Double.toString(menu.askPriceInput()) ;
+	    String count = Integer.toString(menu.askCountInput()) ;
+	    String age = Integer.toString(menu.askAgeInput()) ;
+	    String puzzleType = Character.toString(menu.askPuzzleTypeInput());
+
+	    return  new String[] {serialNum, name, brand, price, count, age, puzzleType};
+	}
+
+	private String[] askAnimalData(String serialNum) {
+		// TODO Auto-generated method stub
+		
+		String name = menu.askNameInput();
+	    String brand = menu.askBrandInput();
+	    String price = Double.toString(menu.askPriceInput()) ;
+	    String count = Integer.toString(menu.askCountInput()) ;
+	    String age = Integer.toString(menu.askAgeInput()) ;
+	    String material = menu.askMaterialInput();
+	    String size = Character.toString(menu.askSizeInput()) ;
+
+	    return new String[] {serialNum, name, brand, price, count, age, material, size};
+		
+	}
+
+	private String[] askFigureData(String serialNum) {
+		// TODO Auto-generated method stub
+		
+	    String name = menu.askNameInput();
+	    String brand = menu.askBrandInput();
+	    double price = menu.askPriceInput();
+	    int count = menu.askCountInput();
+	    int age = menu.askAgeInput();
+	    char classification = menu.askClassificationInput();
+	    
+	    return new String[] {serialNum, name, brand, Double.toString(price), Integer.toString(count), Integer.toString(age), Character.toString(classification)};
+	}
+
 	/**
 	 * this method promts and removes a toy from the database
 	 * 
@@ -130,122 +230,8 @@ public class ToyStoreManager {
 		else {
 			
 		}
-		
+		return null; //temporary
 	}
-	
-	public void addData() throws Exception {
-	    File toyFile = new File(FILE_PATH);
-
-	    if (!toyFile.exists()) {
-	        return; // Exit early if file doesn’t exist
-	    }
-
-	    Scanner fileReader = new Scanner(toyFile);
-
-	    while (fileReader.hasNextLine()) {
-	        String currentLine = fileReader.nextLine();
-	        String[] splittedLine = currentLine.split(";");
-
-	        String toyType = getToyType(splittedLine[0]);
-	        Toy currentToy = null;
-
-	        if (toyType.equals("Figure")) {
-	            currentToy = createFigure(splittedLine);
-	        } 
-	        else if (toyType.equals("Animal")) {
-	            currentToy = createAnimal(splittedLine);
-	        } 
-	        else if (toyType.equals("Puzzle")) {
-	            currentToy = createPuzzle(splittedLine);
-	        } 
-	        else if (toyType.equals("BoardGame")) {
-	            currentToy = createBoardGame(splittedLine);
-	        }
-
-	        if (currentToy != null) {
-	        	toyStorageDB.add(currentToy);
-	        }
-	    }
-
-	    fileReader.close();
-	}
-	
-	private String getToyType(String serialNum) {
-	    if (serialNum == null || serialNum.isEmpty()) {
-	        return "error";
-	    }
-
-	    char firstChar = serialNum.charAt(0);
-
-	    if (firstChar == '0' || firstChar == '1')
-	        return "Figure";
-	    else if (firstChar == '2' || firstChar == '3')
-	        return "Animal";
-	    else if (firstChar == '4' || firstChar == '5' || firstChar == '6')
-	        return "Puzzle";
-	    else if (firstChar == '7' || firstChar == '8' || firstChar == '9')
-	        return "BoardGame";
-	    else
-	        return "error";
-	}
-
-	
-	
-	
-	private Toy createFigure(String[] data) {
-	    String serialNum = data[0];
-	    String name = data[1];
-	    String brand = data[2];
-	    double price = Double.parseDouble(data[3]);
-	    int count = Integer.parseInt(data[4]);
-	    int age = Integer.parseInt(data[5]);
-	    char classification = data[6].charAt(0);
-
-	    return new Figure(serialNum, name, brand, price, count, age, classification);
-	}
-	private Toy createAnimal(String[] data) {
-	    String serialNum = data[0];
-	    String name = data[1];
-	    String brand = data[2];
-	    double price = Double.parseDouble(data[3]);
-	    int count = Integer.parseInt(data[4]);
-	    int age = Integer.parseInt(data[5]);
-	    String material = data[6];
-	    char size = data[7].charAt(0);
-
-	    return new Animal(serialNum, name, brand, price, count, age, material, size);
-	}
-	
-	private Toy createPuzzle(String[] data) {
-	    String serialNum = data[0];
-	    String name = data[1];
-	    String brand = data[2];
-	    double price = Double.parseDouble(data[3]);
-	    int count = Integer.parseInt(data[4]);
-	    int age = Integer.parseInt(data[5]);
-	    char puzzleType = data[6].charAt(0);
-
-	    return new Puzzle(serialNum, name, brand, price, count, age, puzzleType);
-	}
-	private Toy createBoardGame(String[] data) {
-	    String serialNum = data[0];
-	    String name = data[1];
-	    String brand = data[2];
-	    double price = Double.parseDouble(data[3]);
-	    int count = Integer.parseInt(data[4]);
-	    int age = Integer.parseInt(data[5]);
-	    String[] minMaxPlayers = data[6].split("-");
-	    int minPlayers = Integer.parseInt(minMaxPlayers[0]);
-	    int maxPlayers = Integer.parseInt(minMaxPlayers[1]);
-	    String designers = data[7];
-
-	    return new BoardGame(serialNum, name, brand, price, count, age, minPlayers, maxPlayers, designers);
-	}
-
-
-
-
-	
 	
 	
 	/**
@@ -261,32 +247,32 @@ public class ToyStoreManager {
 		else System.out.println("Error: out of stock"); //temporary placeholder to call menu class
 	}
 	
-	private void findSystemToy() throws Exception {
-		boolean validSerialNumber;
-		String serialNumber;
-
-		do {
-			serialNumber = menu.askSerialNumber(); // Asks the user to give a serial number.
-			validSerialNumber = toyStorageDB.findToySerialnum(serialNumber) == null;
-
-		} while (!validSerialNumber);
-
-		// Checks the first character of the serial number to determine what type of toy
-		if (serialNumber.charAt(0) == '1' || serialNumber.charAt(0) == '0') {
-			Figure figResult = menu.messageAddFigure(serialNumber);
-			toyStorageDB.add(figResult);
-		} else if ((serialNumber.charAt(0) == '2' || serialNumber.charAt(0) == '3')) {
-			Animal animalResult = menu.messageAddAnimal(serialNumber);
-			toyStorageDB.add(animalResult);
-		} else if (serialNumber.charAt(0) == '4' || serialNumber.charAt(0) == '5' || serialNumber.charAt(0) == '6') {
-			Puzzle puzzleResult = menu.messageAddPuzzle(serialNumber);
-			toyStorageDB.add(puzzleResult);
-		} else {
-			BoardGame bgResult = menu.messageAddBoardGame(serialNumber);
-			toyStorageDB.add(bgResult);
-		}
-		menu.toyAddMessage(); // Tells the user that the toy has been added.
-	}
+//	private void findSystemToy() throws Exception {
+//		boolean validSerialNumber;
+//		String serialNumber;
+//
+//		do {
+//			serialNumber = menu.askSerialNumber(); // Asks the user to give a serial number.
+//			validSerialNumber = toyStorageDB.findToySerialnum(serialNumber) == null;
+//
+//		} while (!validSerialNumber);
+//
+//		// Checks the first character of the serial number to determine what type of toy
+//		if (serialNumber.charAt(0) == '1' || serialNumber.charAt(0) == '0') {
+//			Figure figResult = menu.messageAddFigure(serialNumber);
+//			toyStorageDB.add(figResult);
+//		} else if ((serialNumber.charAt(0) == '2' || serialNumber.charAt(0) == '3')) {
+//			Animal animalResult = menu.messageAddAnimal(serialNumber);
+//			toyStorageDB.add(animalResult);
+//		} else if (serialNumber.charAt(0) == '4' || serialNumber.charAt(0) == '5' || serialNumber.charAt(0) == '6') {
+//			Puzzle puzzleResult = menu.messageAddPuzzle(serialNumber);
+//			toyStorageDB.add(puzzleResult);
+//		} else {
+//			BoardGame bgResult = menu.messageAddBoardGame(serialNumber);
+//			toyStorageDB.add(bgResult);
+//		}
+//		menu.toyAddMessage(); // Tells the user that the toy has been added.
+//	}
 
 	
 	/**

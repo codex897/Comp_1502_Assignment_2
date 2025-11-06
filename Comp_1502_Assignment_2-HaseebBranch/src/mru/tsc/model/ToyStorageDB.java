@@ -35,43 +35,94 @@ public class ToyStorageDB {
 				splittedLine = currentLine.split(";"); // Split the line at semi-colons
 
 				Toy currentToy; // Change type to Toy
-
-				if (splittedLine[0].charAt(0) == '1' || splittedLine[0].charAt(0) == '0') {
-					String serialNum = splittedLine[0];
-					currentToy = new Figure(serialNum, splittedLine[1], splittedLine[2],
-							Double.parseDouble(splittedLine[3]), Integer.parseInt(splittedLine[4]),
-							Integer.parseInt(splittedLine[5]), splittedLine[6].charAt(0));
-					toydb.add(currentToy); // Add figure object directly
-
-				} else if (splittedLine[0].charAt(0) == '2' || splittedLine[0].charAt(0) == '3') {
-					String serialNum = splittedLine[0];
-					currentToy = new Animal(serialNum, splittedLine[1], splittedLine[2],
-							Double.parseDouble(splittedLine[3]), Integer.parseInt(splittedLine[4]),
-							Integer.parseInt(splittedLine[5]), splittedLine[6], splittedLine[7].charAt(0));
-					toydb.add(currentToy); // Add animal object directly
-
-				} else if (splittedLine[0].charAt(0) == '4' || splittedLine[0].charAt(0) == '5'
-						|| splittedLine[0].charAt(0) == '6') {
-					String serialNum = splittedLine[0];
-					currentToy = new Puzzle(serialNum, splittedLine[1], splittedLine[2],
-							Double.parseDouble(splittedLine[3]), Integer.parseInt(splittedLine[4]),
-							Integer.parseInt(splittedLine[5]), splittedLine[6].charAt(0));
-					toydb.add(currentToy); // Add puzzle object directly
-
-				} else if (splittedLine[0].charAt(0) == '7' || splittedLine[0].charAt(0) == '8'
-						|| splittedLine[0].charAt(0) == '9') {
-					String[] minMaxPlayers = splittedLine[6].split("-");
-					String serialNum = splittedLine[0];
-
-					currentToy = new BoardGame(serialNum, splittedLine[1], splittedLine[2],
-							Double.parseDouble(splittedLine[3]), Integer.parseInt(splittedLine[4]),
-							Integer.parseInt(splittedLine[5]), Integer.parseInt(minMaxPlayers[0]),
-							Integer.parseInt(minMaxPlayers[1]), splittedLine[7]);
-					toydb.add(currentToy); // Add board game object directly
+				String toyType = getToyType(splittedLine[0]);
+				
+				if(toyType.equals("Figure")) { //takes in the serial number and checks for specific type of toy
+					createFigure(splittedLine);
 				}
+				
+				else if(toyType.equals("Animal") ){ //takes in the serial number and checks for specific type
+					createAnimal(splittedLine);
+				}
+				
+				else if(toyType.equals("Puzzle") ){ //takes in the serial number and checks for specific type
+					createPuzzle(splittedLine);
+				}
+				
+				else if(toyType.equals("BoardGame") ){ //takes in the serial number and checks for specific type
+					createBoardGame(splittedLine);
+				}
+				
 			}
+			
 			fileReader.close(); // Close the file reader
 		}
+	}
+	
+	/*
+	 * create[Toy_TYPE] can be used for the file and user input
+	 */
+	public void createFigure(String[] data) {
+	    String serialNum = data[0];
+	    String name = data[1];
+	    String brand = data[2];
+	    double price = Double.parseDouble(data[3]);
+	    int count = Integer.parseInt(data[4]);
+	    int age = Integer.parseInt(data[5]);
+	    char classification = data[6].charAt(0);
+
+	    toydb.add(new Figure(serialNum, name, brand, price, count, age, classification));
+	}
+	public void createAnimal(String[] data) {
+	    String serialNum = data[0];
+	    String name = data[1];
+	    String brand = data[2];
+	    double price = Double.parseDouble(data[3]);
+	    int count = Integer.parseInt(data[4]);
+	    int age = Integer.parseInt(data[5]);
+	    String material = data[6];
+	    char size = data[7].charAt(0);
+
+	    toydb.add(new Animal(serialNum, name, brand, price, count, age, material, size));
+	}
+	
+	public void createPuzzle(String[] data) {
+	    String serialNum = data[0];
+	    String name = data[1];
+	    String brand = data[2];
+	    double price = Double.parseDouble(data[3]);
+	    int count = Integer.parseInt(data[4]);
+	    int age = Integer.parseInt(data[5]);
+	    char puzzleType = data[6].charAt(0);
+
+	    toydb.add( new Puzzle(serialNum, name, brand, price, count, age, puzzleType));
+	}
+	
+	public void createBoardGame(String[] data) {
+	    String serialNum = data[0];
+	    String name = data[1];
+	    String brand = data[2];
+	    double price = Double.parseDouble(data[3]);
+	    int count = Integer.parseInt(data[4]);
+	    int age = Integer.parseInt(data[5]);
+	    String[] minMaxPlayers = data[6].split("-");
+	    int minPlayers = Integer.parseInt(minMaxPlayers[0]);
+	    int maxPlayers = Integer.parseInt(minMaxPlayers[1]);
+	    String designers = data[7];
+
+	    toydb.add( new BoardGame(serialNum, name, brand, price, count, age, minPlayers, maxPlayers, designers));
+	}
+
+
+
+	/**
+	 * This method returns the arralyList containing all the data from the file
+	 * 
+	 * @return the arraylist containing the toy data from the file
+	 */
+	public ArrayList<Toy> getToyDB() {
+		
+		return toydb;
 	}
 
 	/**
@@ -162,6 +213,32 @@ public class ToyStorageDB {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	public String getToyType(String serialNum) {
+	    if (serialNum == null || serialNum.isEmpty()) {
+	        return "error";
+	    }
+
+	    char firstChar = serialNum.charAt(0);
+
+	    if (firstChar == '0' || firstChar == '1')
+	        return "Figure";
+	    else if (firstChar == '2' || firstChar == '3')
+	        return "Animal";
+	    else if (firstChar == '4' || firstChar == '5' || firstChar == '6')
+	        return "Puzzle";
+	    else if (firstChar == '7' || firstChar == '8' || firstChar == '9')
+	        return "BoardGame";
+	    else
+	        return "error";
+	}
+
+
+	
+	
+	
+	
+	
 
 }
 
