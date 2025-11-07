@@ -12,7 +12,7 @@ public class ToyStoreManager {
 	Scanner input;
 	ToyStorageDB toyStorageDB;
 	Menu menu;
-	
+	boolean backToMainMenu = false;
 	final String FILE_PATH = "res/toys.txt" ;
 	
 	/**
@@ -20,9 +20,12 @@ public class ToyStoreManager {
 	 */
 	public ToyStoreManager() {
 		this.input = new Scanner(System.in);
+	
 		menu = new Menu();
+		
 		try {
 			toyStorageDB =  new ToyStorageDB(FILE_PATH);
+			toyStorageDB.addData();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -35,6 +38,7 @@ public class ToyStoreManager {
 	}
 	
 	private void startMenu() {
+		backToMainMenu = false; // re-initialize this to false just incase it was turned true when user wanted to go back to menu
 		while(true) {
 			String userOption = menu.displayMainMenu(); // no validation yet
 			switch (userOption) {
@@ -51,7 +55,7 @@ public class ToyStoreManager {
 			case "4":
 				
 				saveExit();
-				break;
+				return;
 				
 
 			default:
@@ -61,13 +65,101 @@ public class ToyStoreManager {
 		
 	}
 
+	/**
+	 * This method displays indication of data saving as well as calls to transfer all toy data in the array list into the text file
+	 */
 	private void saveExit() {
-		System.out.println("testtEXITTt");
+		menu.displaySaveExit();
+		System.out.println("Savingdata");
+		toyStorageDB.saveData();
+		
 		
 	}
 
 	private void searchInventory() {
-		System.out.println("testtt");
+		while(true) {
+			if(backToMainMenu == true) return;
+			String userOption = menu.displayFindToys();
+			
+			
+			switch (userOption) {
+				case "1":
+					findToysUsingSerialNumber();
+					break;
+				case "2":
+					findUsingName();
+					break;
+				case "3":
+					findUsingType();
+					break;
+				case "4":
+					return;
+					
+		
+				default:
+					menu.InvalidOption();
+					break;
+			}
+		}
+
+		
+	}
+
+	private void findUsingType() {
+		String toyType =  menu.askTypeInput();
+		if (toyType.equals("b")) toyType = "BoardGames";
+		else if (toyType.equals("f")) toyType = "Figure";
+		else if (toyType.equals("a")) toyType = "Animal";
+		else if (toyType.equals("p")) toyType = "Puzzle";
+		
+		ArrayList<Toy> snList = toyStorageDB.compareTypeToAllToys(toyType); //returns an arraylist containg same type
+		
+		if(snList.isEmpty()) { //if its empty then let user know and stop this function by returning
+			menu.toyNotFound();
+			return;
+		}
+		
+		displayToyList(snList);
+		Toy selectedToy = selectValidation(snList);
+		if(selectedToy == null) {
+			backToMainMenu = true;
+			return;
+		}
+		purchase(selectedToy);
+	}
+
+	private void findUsingName() {
+		String toyName =  menu.askNameInput();
+		ArrayList<Toy> snList = toyStorageDB.compareNameToAllToys(toyName); //returns an arraylist containg same name
+		
+		if(snList.isEmpty()) { //if its empty then let user know and stop this function by returning
+			menu.toyNotFound();
+			return;
+		}
+		displayToyList(snList);
+		Toy selectedToy = selectValidation(snList);
+		if(selectedToy == null) {
+			backToMainMenu = true;
+			return;
+		}
+		purchase(selectedToy);
+	}
+
+	private void findToysUsingSerialNumber() {
+		String userSerialNumber =  menu.askSerialNumber();
+		ArrayList<Toy> snList = toyStorageDB.compareSNToAllToys(userSerialNumber); //returns an arraylist containg same sn
+		
+		if(snList.isEmpty()) { //if its empty then let user know and stop this function by returning
+			menu.toyNotFound();
+			return;
+		}
+		displayToyList(snList);
+		Toy selectedToy = selectValidation(snList);
+		if(selectedToy == null) {
+			backToMainMenu = true;
+			return;
+		}
+		purchase(selectedToy);
 		
 	}
 
@@ -85,35 +177,35 @@ public class ToyStoreManager {
 		ArrayList<Toy> sameSNList;
 		String userSerialNumber; // can be changed to int later if needed
 		while(true) { // should add try catch 
-			System.out.println("enter SN: "); //temporary placeholder
-			userSerialNumber = input.nextLine(); //temporary must validate SN
+
+			userSerialNumber =  menu.askSerialNumber(); //must validate sn
 			sameSNList = toyStorageDB.compareSNToAllToys(userSerialNumber); //a list containing an item with the same serial number
 			if (!sameSNList.isEmpty()) System.out.println("SN must be unique!!"); //placeholder to call menu class should throw error
 			else break;
 		}
 		
-		String toyType = toyStorageDB.getToyType(userSerialNumber);
+		String toyType = toyStorageDB.getToyType(userSerialNumber); //takes in the serial number and checks for specific type of toy
 		
 		/*
 		 * create the toy type by using the toy data from user
 		 */
-		if(toyType.equals("Figure")) { //takes in the serial number and checks for specific type of toy
-			
-			toyStorageDB.createFigure(askFigureData(userSerialNumber));
+		if(toyType.equals("Figure")) { 
+			// prompts to ask for toy data to feed into a specific create[TOY TYPE] method
+			toyStorageDB.createFigure(askFigureData(userSerialNumber)); 
 		}
 		
-		else if(toyType.equals("Animal") ){ //takes in the serial number and checks for specific type
-			
+		else if(toyType.equals("Animal") ){ 
+			// prompts to ask for toy data to feed into a specific create[TOY TYPE] method
 			toyStorageDB.createAnimal(askAnimalData(userSerialNumber));
 		}
 		
-		else if(toyType.equals("Puzzle") ){ //takes in the serial number and checks for specific type
-			
+		else if(toyType.equals("Puzzle") ){ 
+			// prompts to ask for toy data to feed into a specific create[TOY TYPE] method
 			toyStorageDB.createPuzzle(askPuzzleData(userSerialNumber));
 		}
 		
-		else if(toyType.equals("BoardGame") ){ //takes in the serial number and checks for specific type
-	
+		else if(toyType.equals("BoardGame") ){ 
+			// prompts to ask for toy data to feed into a specific create[TOY TYPE] method
 			toyStorageDB.createBoardGame(askBoardGameData(userSerialNumber));
 		}
 		
@@ -219,18 +311,23 @@ public class ToyStoreManager {
 	 * @param userSelectionInput
 	 * @return the toy object that the user selected
 	 */
-	private Toy selectValidation (ArrayList<Toy> searchedList, int userSelectionInput) {
-		int maxSearchedListSize;
+	private Toy selectValidation (ArrayList<Toy> searchedList) {
+		int userSelectionInput;
+		int maxSearchedListSize = searchedList.size(); // check the size of the list, that will be the maximum number the user can input
 		
-		maxSearchedListSize = searchedList.size(); //WIP
-		
-		if (userSelectionInput > maxSearchedListSize || userSelectionInput <0) { //try catch error exception
-			//throw new exception
-		}
-		else {
+		while (true) {
+			userSelectionInput = menu.enterOptionNumber();
+			if (userSelectionInput > maxSearchedListSize + 1 || userSelectionInput <1) { //try catch error exception cannot be more than the list or less than 0
+				//throw new exception
+				System.out.println("error exeption");
+			}
+			else break;
 			
 		}
-		return null; //temporary
+		
+		if(userSelectionInput == maxSearchedListSize + 1) return null; // if you select to go back then return null
+		else return searchedList.get(userSelectionInput - 1); //if user choice 1 that would be index 0 in the list, so you must subtract 1
+		
 	}
 	
 	
@@ -281,14 +378,17 @@ public class ToyStoreManager {
 	 * @param searchedList the list containing the toys in the database as an ArrayList Class
 	 */
 	private void displayToyList(ArrayList<Toy> searchedList) {
-
+		
 		int count = 0;
 		for (Toy toy : searchedList) {
 			count ++;
 			//There should be a menu call here that takes in count
-			System.out.println(toy.toString()); // TEMPORARY PLACEHOLDER TO CALL MENU CLASS
+			menu.displaytoylist(count, toy.toString());
+			
 			
 		}
+		menu.displaytoylist(count + 1, "Back to Main Menu");
+		
 	}
 	
 

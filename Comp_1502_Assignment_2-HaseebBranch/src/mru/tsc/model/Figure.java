@@ -23,7 +23,7 @@ public class Figure extends Toy {
 	}
 
 	public String typeOf() {
-		String type = "Animal";
+		String type = "Figure";
 		return type;
 	}
 

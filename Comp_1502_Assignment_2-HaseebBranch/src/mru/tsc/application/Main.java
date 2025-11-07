@@ -8,8 +8,8 @@ public class Main {
 	public static void main(String[] args) throws Exception {
 		
 		
-//		ToyStorageDB c = new ToyStorageDB("res/toys.txt");
-//		c.addData();
+		ToyStorageDB c = new ToyStorageDB("res/toys.txt");
+		
 //		System.out.println(c.toString());
 //		c.toString();
 		

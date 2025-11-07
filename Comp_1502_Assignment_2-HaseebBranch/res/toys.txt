@@ -35,7 +35,7 @@
 6596226544;Rattle puzzle;Gameara;43.21;5;8;T
 1731377211;Groovy Girls;Game Loop;80.66;3;5;H
 8934865506;Djambi;Game Shadow;78.76;3;6;2-6;T-Jay Harper,Marshall Swanson
-7393662390;Star Wars Tactics;Game Loop;3.44;3;2;1-5;Ruairidh Larsen
+7393662390;Star Wars Tactics;Game Loop;3.44;2;2;1-5;Ruairidh Larsen
 9399563748;Monopoly;Game Survival;47.52;4;3;2-5;Usama Salas
 4831187177;Tiling puzzle;Game Rush;85.60;1;6;L
 1772751359;Teddy bear;Game Reboot;221.46;8;3;H
@@ -223,3 +223,4 @@
 1396272830;Power Rangers;Game Mach;277.40;12;5;A
 1778180329;George Washington;Gamegenix;192.31;12;8;H
 4662861666;Acrostic;Game Pixel;70.84;11;9;T
+

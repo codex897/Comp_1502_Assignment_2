@@ -2,8 +2,13 @@ package mru.tsc.model;
 
 
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
+
+
 
 public class ToyStorageDB {
 
@@ -157,7 +162,7 @@ public class ToyStorageDB {
 		String currentName;
 		
 		for (Toy toy : toydb) { // read each object in list, then do a getName the Name
-			currentName = toy.getName();
+			currentName = toy.getName().toLowerCase();
 			
 			if (currentName.contains(name)) toyNameList.add(toy);  //compare Name to database Name, if true  add to a list to return
 		}
@@ -233,8 +238,32 @@ public class ToyStorageDB {
 	        return "error";
 	}
 
+	/**
+	 * This method saves the data from the array list to the file path toy data base 
+	 * by calling first calling a method that formats each line in the toy array list 
+	 * and then printing the formated version into the file path
+	 */
+	public void saveData() {
+		FileWriter filewriter;
+		
+		try {
+			filewriter = new FileWriter(FILE_PATH);
+			PrintWriter outputFile = new PrintWriter(filewriter);
+			outputFile.print(this.toString());
+			outputFile.close();
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		
+		
 
 	
+			
+	}
 	
 	
 	

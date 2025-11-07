@@ -27,6 +27,25 @@ public class Menu {
 	    }
 	    return name;
 	}
+	
+	public String askTypeInput() {
+	    System.out.print("Enter Toy Type || type [F] for figures, [A] for animal, [P] for puzzles, [B] for board-games: ");
+	    while(true) {
+	    	char type = input.nextLine().toLowerCase().charAt(0);
+	    	if (type == 'f' || type == 'a' || type == 'p' || type == 'b') {
+	    		return Character.toString(type);
+	    	}
+	    	else {
+	    		System.out.print ("Invalid input: enter either [F], [A], [P], [B]");
+	    		tryAgain();
+	    }
+	    }
+	    
+	    
+	    
+	    
+	   
+	}
 
 	public String askBrandInput() {
 	    System.out.print("Enter Toy Brand: ");
@@ -234,9 +253,10 @@ public class Menu {
 
 
 	public String askSerialNumber() {
-		//please validate serial number and return value
-		String serial = null;
-		return serial;
+		//please validate serial number and return value WIP
+		System.out.println("enter SN: "); //temporary placeholder
+		return input.nextLine();
+
 	}
 
 
@@ -264,5 +284,73 @@ public class Menu {
 		
 		String userInput = input.nextLine();
 		return userInput;
+	}
+
+
+
+	public void displaySaveExit() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+	public String displayFindToys() {
+		System.out.print("choose number 1sn, 2name ,3toy type, 4"); //placeholder
+		this.displayBackToMainMenu();
+		return input.nextLine();
+		
+	}
+
+
+
+	public void displayBackToMainMenu() {
+		// TODO Auto-generated method stub
+		System.out.println("go back ");
+	}
+
+
+
+	public void InvalidOption() {
+		System.out.print("this is not a valid option");
+		this.tryAgain();
+		
+	}
+
+
+
+	public void displaytoylist(int count, String toyList) {
+		System.out.print(" (" + count + ") ");
+		System.out.println(toyList);
+		
+		
+		
+	}
+
+
+
+	public void toyNotFound() {
+		System.out.println("There were no toys found");
+	}
+
+
+
+	public int enterOptionNumber() { //validate this please
+		// TODO Auto-generated method stub
+		System.out.print("Enter option Number to purchase: ");
+		while (true) {
+	        try {
+	            int option = input.nextInt();
+	            input.nextLine(); // clear the left over newline
+	            return option;
+
+	        } catch (Exception e) {
+	            System.out.print("Invalid input: Input must be a number");
+	            tryAgain();
+	            input.nextLine();
+	           
+	        }
+	        System.out.print("Enter option Number to purchase: ");
+	    }
 	}
 }

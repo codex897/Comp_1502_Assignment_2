@@ -1,5 +1,7 @@
 package mru.tsc.model;
 
+import java.util.Locale.Category;
+
 public abstract class Toy {
 
 	private String name;
@@ -69,8 +71,8 @@ public abstract class Toy {
 	public abstract String typeOf();
 
 	public String toString() {
-		return " Category: " + name + ", Serial Number: " + serialNum + ", Name: " + brand + ", Price: " + price
-				+ ", Available Count: " + count + ", Age Apporiate: " + ageAllowed;
+		return "Category:" + this.typeOf() + ", Serial Number:" + serialNum + ", Name:"+ name +", Brand:"+ brand + ", Price:" + price
+				+ ", Available Count:" + count + ", Age Apporiate:" + ageAllowed;
 	}
 
 	public String toFileString() {
@@ -79,7 +81,7 @@ public abstract class Toy {
 	}
 
 	public String stringToFormat() {
-		return serialNum + ";" + name + ";" + brand + ";" + price + ";" + count + ";" + ageAllowed;
+		return serialNum + ";" + name + ";" + brand + ";" + String.format("%.2f", price)  + ";" + count + ";" + ageAllowed;
 	}
 
 	public int toyDecrement() {
@@ -87,10 +89,10 @@ public abstract class Toy {
 		
 	}
 	
-	@Override
-	public String toString() {
-	    return "Toy name: " + name + ", Price: $" + price;
-	}
+//	@Override
+//	public String toString() {
+//	    return "Toy name: " + name + ", Price: $" + price;
+//	}
 
 
 
