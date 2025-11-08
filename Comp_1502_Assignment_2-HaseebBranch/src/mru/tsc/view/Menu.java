@@ -277,7 +277,8 @@ public class Menu {
 		System.out.println("(1) Search Inventory and Purchase Toy");
 		System.out.println("(2) Add New Toy");
 		System.out.println("(3) Remove Toy");
-		System.out.println("(4) Save & Exit");
+		System.out.println("(4) Gift Suggestion");
+		System.out.println("(5) Save & Exit");
 		System.out.println();
 		
 		System.out.print("Enter Option:");
@@ -352,5 +353,15 @@ public class Menu {
 	        }
 	        System.out.print("Enter option Number to purchase: ");
 	    }
+	}
+
+
+
+	public boolean askToRemove() {
+		// TODO Auto-generated method stub
+		System.out.println("do you want to remove y/n?: "); //placeholder to call menu class
+		
+	 	if(input.nextLine().equals("y")) return true;
+	 	else return false;
 	}
 }

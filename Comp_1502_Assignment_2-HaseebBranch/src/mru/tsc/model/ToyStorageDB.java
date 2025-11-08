@@ -76,7 +76,7 @@ public class ToyStorageDB {
 	    int age = Integer.parseInt(data[5]);
 	    char classification = data[6].charAt(0);
 
-	    toydb.add(new Figure(serialNum, name, brand, price, count, age, classification));
+	    toydb.add(new Figure(serialNum, name, brand, price, count, age,Character.toUpperCase(classification)));
 	}
 	public void createAnimal(String[] data) {
 	    String serialNum = data[0];
@@ -88,7 +88,7 @@ public class ToyStorageDB {
 	    String material = data[6];
 	    char size = data[7].charAt(0);
 
-	    toydb.add(new Animal(serialNum, name, brand, price, count, age, material, size));
+	    toydb.add(new Animal(serialNum, name, brand, price, count, age, material,Character.toUpperCase(size)));
 	}
 	
 	public void createPuzzle(String[] data) {
@@ -100,7 +100,7 @@ public class ToyStorageDB {
 	    int age = Integer.parseInt(data[5]);
 	    char puzzleType = data[6].charAt(0);
 
-	    toydb.add( new Puzzle(serialNum, name, brand, price, count, age, puzzleType));
+	    toydb.add( new Puzzle(serialNum, name, brand, price, count, age,Character.toUpperCase(puzzleType) ));
 	}
 	
 	public void createBoardGame(String[] data) {

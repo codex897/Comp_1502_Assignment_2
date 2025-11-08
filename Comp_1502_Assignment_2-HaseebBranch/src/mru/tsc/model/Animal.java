@@ -44,10 +44,10 @@ public class Animal extends Toy {
 	public String stringToFormat() {
 		return super.stringToFormat() + ";" + material + ";" + size;
 	}
-	@Override
-	public String toString() {
-	    return "Type: " + type ;
-	}
+//	@Override
+//	public String toString() {
+//	    return "Type: " + type ;
+//	}
 }
 
 	

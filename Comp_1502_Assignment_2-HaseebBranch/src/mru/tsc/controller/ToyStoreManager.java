@@ -38,9 +38,11 @@ public class ToyStoreManager {
 	}
 	
 	private void startMenu() {
-		backToMainMenu = false; // re-initialize this to false just incase it was turned true when user wanted to go back to menu
+		
 		while(true) {
+			backToMainMenu = false; // re-initialize this to false just incase it was turned true when user wanted to go back to menu
 			String userOption = menu.displayMainMenu(); // no validation yet
+			
 			switch (userOption) {
 			case "1":
 				searchInventory();
@@ -53,7 +55,9 @@ public class ToyStoreManager {
 				removeToy();
 				break;
 			case "4":
-				
+				giftSuggestion();
+				break;
+			case "5":
 				saveExit();
 				return;
 				
@@ -292,13 +296,20 @@ public class ToyStoreManager {
 			else break;
 		}
 
-		sameSNList.get(0).toString(); //print the description of the toy
-		System.out.println("do you want to remove y/n?: "); //placeholder to call menu class
-		indexInDataBase = toyList.indexOf(sameSNList.get(0)); //get the object in the sameSNList and get the index for that object within the DataBase
-		toyList.remove(indexInDataBase);
 		
-		System.out.println("object removed!"); //placeholder to call menu class
+		displayToy(sameSNList.get(0));
+		boolean wantToRemove = menu.askToRemove();
+		if (wantToRemove) {
+			indexInDataBase = toyList.indexOf(sameSNList.get(0)); //get the object in the sameSNList and get the index for that object within the DataBase
+			toyList.remove(indexInDataBase); //get the arraylist containing the toys and remove that toy from there
+			System.out.println("object removed!"); //placeholder to call menu class
+		}
+
+		
+		
 		System.out.println("press enter to continue"); //placeholder to call menu class
+		input.nextLine();
+		return;
 	}
 	
 	/**
@@ -383,6 +394,7 @@ public class ToyStoreManager {
 		for (Toy toy : searchedList) {
 			count ++;
 			//There should be a menu call here that takes in count
+			
 			menu.displaytoylist(count, toy.toString());
 			
 			
@@ -449,19 +461,40 @@ public class ToyStoreManager {
 			}
 			
 			
-			if (ageString.isEmpty() && type.isEmpty() && minPriceString.isEmpty() && maxPriceString.isEmpty()) {
+			if (ageString.isEmpty() && type.isEmpty() && minPriceString.isEmpty() && maxPriceString.isEmpty()) { //do this in the menu class
 				System.out.println("ERROR: at least one field must be filled out");
 			}
 			else break;
 		}
 
 
+	
+		
+		
 		
 		filteredList = toyStorageDB.compareTypeToAllToys(type);
-		filteredList = filterAge(filteredList, age); 
-		filteredList = filterPrice(filteredList, minPrice, maxPrice); 
+		if(type.isEmpty()) filteredList = toyList;
 		
+		filteredList = filterAge(filteredList, age); 
+		System.out.println("12");
+		filteredList = filterPrice(filteredList, minPrice, maxPrice); 
+		System.out.println("14");
+		
+		
+		System.out.println(age);
+		System.out.println(type);
+		System.out.println(minPrice);
+		System.out.println(maxPrice);
+		
+		
+		System.out.println("     ==Gift Suggestioni Results== \n");
 		displayToyList(filteredList);
+		Toy selectedToy = selectValidation(filteredList);
+		if(selectedToy == null) {
+			backToMainMenu = true;
+			return;
+		}
+		purchase(selectedToy);
 	
 	}
 	
