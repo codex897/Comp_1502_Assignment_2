@@ -8,18 +8,42 @@ import mru.tsc.view.Menu;
 
 public class ToyStoreManager {
 
+	/**
+	 * This field contains a list of the toy object from the data base
+	 */
 	ArrayList<Toy> toyList;
-	Scanner input;
+	
+	Scanner input; //Temporary
+	
+	/**
+	 * This field contains the ToyStorageDB class and can be used to access the  ToyStorageDb class
+	 */
 	ToyStorageDB toyStorageDB;
+	
+	/**
+	 * This field contains the menu class can be used to access the Menu class
+	 */
 	Menu menu;
+	
+	/**
+	 * This field is for instantly returning back to the main menu through skipping the sub menus
+	 * 
+	 * When this field is true it will return the user back to the main menu
+	 */
 	boolean backToMainMenu = false;
+	
+	/**
+	 * This field is the File path containing the data of all toys
+	 */
 	final String FILE_PATH = "res/toys.txt" ;
 	
 	/**
-	 * This constructor initializes..........
+	 * This constructor initializes the Menu class, assigns the arraylist containg the toys into toyList
+	 * It also initializes the ToyStorageDb class and calls to load the data into an arraylist
+	 * This also starts the program by calling the main menu.
 	 */
 	public ToyStoreManager() {
-		this.input = new Scanner(System.in);
+		this.input = new Scanner(System.in); //probably temporaryr
 	
 		menu = new Menu();
 		
@@ -37,6 +61,10 @@ public class ToyStoreManager {
 		
 	}
 	
+	/**
+	 * This method starts the program and calls for to prompt the main menu that loops until the user chooses to exit
+	 * Additionally, it resets the backToMainMenu field to false to ensure that the user can go to the sub-menu
+	 */
 	private void startMenu() {
 		
 		while(true) {
@@ -70,16 +98,17 @@ public class ToyStoreManager {
 	}
 
 	/**
-	 * This method displays indication of data saving as well as calls to transfer all toy data in the array list into the text file
+	 * This method displays indication of data saving as well as calls to transfer all toy data in the array list into the original text file
 	 */
 	private void saveExit() {
 		menu.displaySaveExit();
-		System.out.println("Savingdata");
 		toyStorageDB.saveData();
-		
-		
 	}
 
+	/**
+	 * This method calls for to prompt the sub menu for finding a specific toy that loops until the user chooses to exit back to the main menu
+	 * It also checks if the backToMainMenu is True which returns back to the main menu before user input
+	 */
 	private void searchInventory() {
 		while(true) {
 			if(backToMainMenu == true) return;
@@ -105,10 +134,11 @@ public class ToyStoreManager {
 					break;
 			}
 		}
-
-		
 	}
 
+	/**
+	 * This method finds all toys with the users chosen toy type and displays and allows the user to purchase the available toys
+	 */
 	private void findUsingType() {
 		String toyType =  menu.askTypeInput();
 		if (toyType.equals("b")) toyType = "BoardGames";
@@ -132,6 +162,9 @@ public class ToyStoreManager {
 		purchase(selectedToy);
 	}
 
+	/**
+	 * This method finds all toys with the users chosen toy name and displays and allows the user to purchase the available toys
+	 */
 	private void findUsingName() {
 		String toyName =  menu.askNameInput();
 		ArrayList<Toy> snList = toyStorageDB.compareNameToAllToys(toyName); //returns an arraylist containg same name
@@ -149,6 +182,9 @@ public class ToyStoreManager {
 		purchase(selectedToy);
 	}
 
+	/**
+	 * This method finds all toys with the users chosen toy Serial number to displays and allows the user to purchase the available toys
+	 */
 	private void findToysUsingSerialNumber() {
 		String userSerialNumber =  menu.askSerialNumber();
 		ArrayList<Toy> snList = toyStorageDB.compareSNToAllToys(userSerialNumber); //returns an arraylist containg same sn
@@ -173,8 +209,7 @@ public class ToyStoreManager {
 	 * It first asks the user to enter a serial number
 	 * that serial number is validated and matched with the matching toy type
 	 * then promts the user to enter the specific toy data related to the type
-	 * finally, it calls a method from the ToyStorageDB class that gives all the type information into that method that adds it to the database
-	 * 
+	 * finally, it calls a method from the ToyStorageDB class that gives all the type information into that method that adds it to the arraylist containing all toys
 	 */
 	private void addNewToy() { //WIP 
 		
@@ -215,6 +250,12 @@ public class ToyStoreManager {
 		
 	}
 	
+	/**
+	 * This method asks the user to input all related data to create a new boardgame object and stores it into a string  to return
+	 * 
+	 * @param serialNum the serial number that the user wants for the boardgame
+	 * @return an array with the data to create a boardgame
+	 */
 	private String[] askBoardGameData(String serialNum) {
 		// TODO Auto-generated method stub
 		String name = menu.askNameInput();
@@ -230,6 +271,12 @@ public class ToyStoreManager {
 		
 	}
 
+	/**
+	 * This method asks the user to input all related data to create a new puzzle object and stores it into a string  to return
+	 * 
+	 * @param serialNum  the serial number that the user wants for the new Puzzle
+	 * @return  an array with the data to create a new puzzle toy
+	 */
 	private String[] askPuzzleData(String serialNum) {
 		// TODO Auto-generated method stub
 		String name = menu.askNameInput();
@@ -242,6 +289,12 @@ public class ToyStoreManager {
 	    return  new String[] {serialNum, name, brand, price, count, age, puzzleType};
 	}
 
+	/**
+	 * This method asks the user to input all related data to create a new animal toy object and stores it into a string  to return
+	 * 
+	 * @param serialNum  the serial number that the user wants for the new Animal toy
+	 * @return  an array with the data to create a new animal toy
+	 */
 	private String[] askAnimalData(String serialNum) {
 		// TODO Auto-generated method stub
 		
@@ -257,6 +310,12 @@ public class ToyStoreManager {
 		
 	}
 
+	/**
+	 * This method asks the user to input all related data to create a new Figure object and stores it into a string  to return
+	 * 
+	 * @param serialNum  the serial number that the user wants for the new Figure toy
+	 * @return  an array with the data to create a new Figure toy
+	 */
 	private String[] askFigureData(String serialNum) {
 		// TODO Auto-generated method stub
 		
@@ -281,7 +340,7 @@ public class ToyStoreManager {
 		String userSerialNumber; // can be changed to int later if needed
 		ArrayList<Toy> sameSNList;
 		
-		while (true){
+		while (true){ //maybe this should go to the menun class
 			System.out.println("enter SN: ");//placeholder to call menu class for display and input
 			userSerialNumber = input.nextLine();
 				/*
@@ -296,17 +355,14 @@ public class ToyStoreManager {
 			else break;
 		}
 
-		
-		displayToy(sameSNList.get(0));
-		boolean wantToRemove = menu.askToRemove();
+		displayToy(sameSNList.get(0)); //gets the toy object and displays it to user
+		boolean wantToRemove = menu.askToRemove(); //ask if the user wants to remove it
 		if (wantToRemove) {
-			indexInDataBase = toyList.indexOf(sameSNList.get(0)); //get the object in the sameSNList and get the index for that object within the DataBase
+			indexInDataBase = toyList.indexOf(sameSNList.get(0)); //get the object in the sameSNList and get the index for that object within the data base arraylist of toys
 			toyList.remove(indexInDataBase); //get the arraylist containing the toys and remove that toy from there
 			System.out.println("object removed!"); //placeholder to call menu class
 		}
 
-		
-		
 		System.out.println("press enter to continue"); //placeholder to call menu class
 		input.nextLine();
 		return;
@@ -329,11 +385,10 @@ public class ToyStoreManager {
 		while (true) {
 			userSelectionInput = menu.enterOptionNumber();
 			if (userSelectionInput > maxSearchedListSize + 1 || userSelectionInput <1) { //try catch error exception cannot be more than the list or less than 0
-				//throw new exception
+				//throw new exception also CANNOT BE EEMPTY
 				System.out.println("error exeption");
 			}
 			else break;
-			
 		}
 		
 		if(userSelectionInput == maxSearchedListSize + 1) return null; // if you select to go back then return null
@@ -355,34 +410,6 @@ public class ToyStoreManager {
 		else System.out.println("Error: out of stock"); //temporary placeholder to call menu class
 	}
 	
-//	private void findSystemToy() throws Exception {
-//		boolean validSerialNumber;
-//		String serialNumber;
-//
-//		do {
-//			serialNumber = menu.askSerialNumber(); // Asks the user to give a serial number.
-//			validSerialNumber = toyStorageDB.findToySerialnum(serialNumber) == null;
-//
-//		} while (!validSerialNumber);
-//
-//		// Checks the first character of the serial number to determine what type of toy
-//		if (serialNumber.charAt(0) == '1' || serialNumber.charAt(0) == '0') {
-//			Figure figResult = menu.messageAddFigure(serialNumber);
-//			toyStorageDB.add(figResult);
-//		} else if ((serialNumber.charAt(0) == '2' || serialNumber.charAt(0) == '3')) {
-//			Animal animalResult = menu.messageAddAnimal(serialNumber);
-//			toyStorageDB.add(animalResult);
-//		} else if (serialNumber.charAt(0) == '4' || serialNumber.charAt(0) == '5' || serialNumber.charAt(0) == '6') {
-//			Puzzle puzzleResult = menu.messageAddPuzzle(serialNumber);
-//			toyStorageDB.add(puzzleResult);
-//		} else {
-//			BoardGame bgResult = menu.messageAddBoardGame(serialNumber);
-//			toyStorageDB.add(bgResult);
-//		}
-//		menu.toyAddMessage(); // Tells the user that the toy has been added.
-//	}
-
-	
 	/**
 	 * This method displays the list of toys that matches the users search by calling the menu class to print
 	 * 
@@ -402,9 +429,7 @@ public class ToyStoreManager {
 		menu.displaytoylist(count + 1, "Back to Main Menu");
 		
 	}
-	
 
-	
 	/**
 	 * This method displays a single of toys that matches the users search by calling the menu class to print
 	 * 
@@ -456,24 +481,17 @@ public class ToyStoreManager {
 			
 				if(minPrice> maxPrice) 
 					System.out.println("error: minimum price cannot be more than the maximum price");
-					
 				else break;
 			}
-			
 			
 			if (ageString.isEmpty() && type.isEmpty() && minPriceString.isEmpty() && maxPriceString.isEmpty()) { //do this in the menu class
 				System.out.println("ERROR: at least one field must be filled out");
 			}
 			else break;
 		}
-
-
 	
-		
-		
-		
 		filteredList = toyStorageDB.compareTypeToAllToys(type);
-		if(type.isEmpty()) filteredList = toyList;
+		if(type.isEmpty()) filteredList = toyList; //if the user chooses not to enter anything for the toy type, make sure filteredlist has all the toys
 		
 		filteredList = filterAge(filteredList, age); 
 		System.out.println("12");
@@ -488,6 +506,11 @@ public class ToyStoreManager {
 		
 		
 		System.out.println("     ==Gift Suggestioni Results== \n");
+		if(filteredList.isEmpty()) { //if its empty then let user know and stop this function by returning
+			menu.toyNotFound();
+			return;
+		}
+		
 		displayToyList(filteredList);
 		Toy selectedToy = selectValidation(filteredList);
 		if(selectedToy == null) {
@@ -522,7 +545,7 @@ public class ToyStoreManager {
 	/**
 	 * This method filters the toys by the minimum age requirement
 	 * 
-	 * if the age of a person given is older than the minum requirement of toys, then it will add to the newToyList
+	 * if the age of a person given equals to the requirement of toys, then it will add to the newToyList
 	 * If the age of a person is a max value integer, that means there is no limitation and all toys in a given list will be added to the newToyList
 	 * 
 	 * @param createdToyList this is a list containing toys that have reacently been filtered, to further filter it
@@ -532,9 +555,9 @@ public class ToyStoreManager {
 	private ArrayList<Toy> filterAge(ArrayList<Toy> createdToyList, Integer age) {
 		ArrayList<Toy> newToyList = new ArrayList<Toy>();
 		
-		
 		for (Toy toy : createdToyList) {
-			if(age >= toy.getAgeAllowed()) newToyList.add(toy) ; //if the age is more than the allowed age to play, add to the list
+			if(age >= toy.getAgeAllowed() && age == Integer.MAX_VALUE) newToyList.add(toy) ; //if the age is more than the allowed age to play, add to the list
+			else if (age == toy.getAgeAllowed()) newToyList.add(toy);
 		}
 		return newToyList;
 	}
@@ -563,12 +586,10 @@ public class ToyStoreManager {
 			} catch (Exception e) {
 				// TODO: if it cant convert it set to 0
 				System.out.println(e.getMessage() + " setting age field as empty"); //temporary
-			
 			}
 		}
 
 		return age;
-
 	}
 	
 	/**
@@ -624,8 +645,8 @@ public class ToyStoreManager {
 			
 			}	
 		}
-		return maxPrice;
 		
+		return maxPrice;
 	}
 	
 

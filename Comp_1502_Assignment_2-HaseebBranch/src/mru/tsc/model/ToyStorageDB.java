@@ -164,7 +164,7 @@ public class ToyStorageDB {
 		for (Toy toy : toydb) { // read each object in list, then do a getName the Name
 			currentName = toy.getName().toLowerCase();
 			
-			if (currentName.contains(name)) toyNameList.add(toy);  //compare Name to database Name, if true  add to a list to return
+			if (currentName.contains(name.toLowerCase())) toyNameList.add(toy);  //compare Name to database Name, if true  add to a list to return
 		}
 		
 		return toyNameList;

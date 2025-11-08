@@ -291,7 +291,7 @@ public class Menu {
 
 	public void displaySaveExit() {
 		// TODO Auto-generated method stub
-		
+		System.out.println("Savingdata");
 	}
 
 
@@ -321,7 +321,8 @@ public class Menu {
 
 
 	public void displaytoylist(int count, String toyList) {
-		System.out.print(" (" + count + ") ");
+		System.out.print(String.format("%-7s", " (" + count + ")"));
+		
 		System.out.println(toyList);
 		
 		
