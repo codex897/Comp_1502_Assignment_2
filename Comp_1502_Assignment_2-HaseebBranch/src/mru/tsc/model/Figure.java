@@ -30,5 +30,8 @@ public class Figure extends Toy {
 	public String stringToFormat() {
 		return super.stringToFormat() + ";" + classification;
 	}
-
+@Override
+	public String toString() {
+	    return "Classifcation " + classification;
+	}
 }
