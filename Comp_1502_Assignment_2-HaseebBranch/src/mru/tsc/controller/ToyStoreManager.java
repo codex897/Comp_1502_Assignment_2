@@ -268,7 +268,6 @@ public class ToyStoreManager {
 	    String designers = menu.askDesignerNamesInput();
 
 	    return new String[]{serialNum, name, brand, price, count, age, minPlayers + "-" + maxPlayers, designers};
-		
 	}
 
 	/**
@@ -307,7 +306,6 @@ public class ToyStoreManager {
 	    String size = Character.toString(menu.askSizeInput()) ;
 
 	    return new String[] {serialNum, name, brand, price, count, age, material, size};
-		
 	}
 
 	/**
@@ -341,8 +339,9 @@ public class ToyStoreManager {
 		ArrayList<Toy> sameSNList;
 		
 		while (true){ //maybe this should go to the menun class
-			System.out.println("enter SN: ");//placeholder to call menu class for display and input
-			userSerialNumber = input.nextLine();
+			
+			userSerialNumber = menu.askSerialNumber();
+			if(userSerialNumber.isEmpty()) return;
 				/*
 				 * 
 				 * validating a valid Serial number method goes here
@@ -350,7 +349,7 @@ public class ToyStoreManager {
 				 */
 			
 			sameSNList = toyStorageDB.compareSNToAllToys(userSerialNumber); //a list containing an item with the same serial number // null is placeholder for userinput for SN
-			if (sameSNList.isEmpty()) System.out.println("Toy not found!"); //placeholder to call menu class
+			if (sameSNList.isEmpty()) menu.toyNotFound(); //placeholder to call menu class
 			
 			else break;
 		}
@@ -651,8 +650,5 @@ public class ToyStoreManager {
 	
 
 
-	
-	
-	
 	
 }

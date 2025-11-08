@@ -247,14 +247,14 @@ public class Menu {
 	}
 
 	public void tryAgain() {
-		System.out.println(" ==Try Again==");
+		System.out.println(" Try Again");
 	}
 
 
 
 	public String askSerialNumber() {
 		//please validate serial number and return value WIP
-		System.out.println("enter SN: "); //temporary placeholder
+		System.out.println("enter SN or [ENTER] to go back: "); //temporary placeholder
 		return input.nextLine();
 
 	}
@@ -332,7 +332,8 @@ public class Menu {
 
 
 	public void toyNotFound() {
-		System.out.println("There were no toys found");
+		System.out.print("There were no toys found");
+		this.tryAgain();
 	}
 
 
