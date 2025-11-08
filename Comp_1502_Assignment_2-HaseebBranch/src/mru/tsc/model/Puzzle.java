@@ -28,6 +28,10 @@ public class Puzzle extends Toy {
 	public String stringToFormat() {
 		return super.stringToFormat() + ";" + type;
 	}
-	 
+	 	@Override
+	public String toString() {
+	    return "Type: " + type ;
+	}
+
 }
 
