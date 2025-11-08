@@ -50,7 +50,7 @@ public class BoardGame extends Toy {
 	
 	@Override
 	public String toString() {
-	    return super.toString() + ", Minimum players: " + minPlayers + ", Maximum players: " + maxPlayers + "designers: ";
+	    return ", Minimum players: " + minPlayers + ", Maximum players: " + maxPlayers + "designers: ";
 	}
 
 
