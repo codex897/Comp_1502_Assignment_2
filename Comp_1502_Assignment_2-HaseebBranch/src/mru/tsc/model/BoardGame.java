@@ -47,6 +47,12 @@ public class BoardGame extends Toy {
 	public String stringToFormat() {
 		return super.stringToFormat() + ";" + minPlayers + "-" + maxPlayers + ";" + designers;
 	}
+	
+	@Override
+	public String toString() {
+	    return "Minimum players: " + minPlayers + ", Maximum players: " + maxPlayers + "designers: ";
+	}
+
 
 }
 
