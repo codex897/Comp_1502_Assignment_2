@@ -75,10 +75,10 @@ public abstract class Toy {
 				+ ", Available Count:" + count + ", Age Apporiate:" + ageAllowed;
 	}
 
-	public String toFileString() {
-
-		return ",";
-	}
+//	public String toFileString() {
+//
+//		return ",";
+//	}
 
 	public String stringToFormat() {
 		return serialNum + ";" + name + ";" + brand + ";" + String.format("%.2f", price)  + ";" + count + ";" + ageAllowed;

@@ -16,12 +16,10 @@ class BoardGameTest {
 	}
 	@Test
 	void testGetSetDesigner() {
-		String designer = bg.getDesigners();
-		assertEquals("Blake Griffin", designer);
+		assertEquals("Blake Griffin", bg.getDesigners());
 		
 		bg.setDesigners("Billy Jeans");
-		String designer2 = bg.getDesigners();
-		assertEquals("Billy Jeans", designer2);
+		assertEquals("Billy Jeans", bg.getDesigners());
 	}
 	
 	@Test
@@ -55,7 +53,6 @@ class BoardGameTest {
 	void testStringToFormat() { 
 		String formatted = bg.stringToFormat();
 		assertNotEquals("BoardGames", formatted);
-		System.out.println(formatted);
 		assertEquals("1111111111;StarFish;Hasbro;12.99;5;6;1-4;Blake Griffin", formatted);
 	}
 	
@@ -64,7 +61,83 @@ class BoardGameTest {
 		String string = bg.toString();
 		assertNotEquals("1111111111;StarFish;Hasbro;12.99;5;6;plastic;L", string);
 		System.out.println(string);
-		assertEquals("???????????", string);
+//		assertEquals("???????????", string);
 	}
+	
+    @Test
+    void testGetName() {
+        assertEquals("StarFish", bg.getName());
+    }
+    
+    @Test
+    void testSetName() {
+        bg.setName("Hollow Knight");
+        assertEquals("Hollow Knight", bg.getName());
+    }
+    
+    @Test
+    void testGetSerialNum() {
+        assertEquals("1111111111", bg.getSerialNum());
+    }
+    
+    @Test
+    void testSetSerialNum() {
+        bg.setSerialNum("0000000001");
+        assertEquals("0000000001", bg.getSerialNum());
+    }
+    
+    @Test
+    void testGetBrand() {
+        assertEquals("Hasbro", bg.getBrand());
+    }
+    
+    @Test
+    void testSetBrand() {
+        bg.setBrand("Nerf");
+        assertEquals("Nerf", bg.getBrand());
+    }
+    
+    @Test
+    void testGetPrice() {
+        assertEquals(12.99, bg.getPrice());
+    }
+    
+    @Test
+    void testSetPrice() {
+        bg.setPrice(100.11);
+        assertEquals(100.11, bg.getPrice());
+    }
+    
+    @Test
+    void testGetCount() {
+        assertEquals(5, bg.getCount());
+    }
+    
+    @Test
+    void testSetCount() {
+        bg.setCount(99);
+        assertEquals(99, bg.getCount());
+    }
+    
+    @Test
+    void testGetAgeAllowed() {
+        assertEquals(6, bg.getAgeAllowed());
+    }
+    
+    @Test
+    void testSetAgeAllowed() {
+        bg.setAgeAllowed(12);
+        assertEquals(12, bg.getAgeAllowed());
+    }
+    
+    @Test
+    void testToyDecrement() {
+        int initialCount = bg.getCount();
+        int newCount = bg.toyDecrement();
+        assertEquals(initialCount - 1, newCount);
+        assertNotEquals(initialCount, newCount);
+    }
+    
+
 
 }

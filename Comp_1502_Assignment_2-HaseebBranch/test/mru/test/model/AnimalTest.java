@@ -59,6 +59,82 @@ class AnimalTest {
 		System.out.println(string);
 		assertEquals("???????????", string);
 	}
+	
+    @Test
+    void testGetName() {
+        assertEquals("StarFish", animal.getName());
+    }
+    
+    @Test
+    void testSetName() {
+        animal.setName("Hollow Knight");
+        assertEquals("Hollow Knight", animal.getName());
+    }
+    
+    @Test
+    void testGetSerialNum() {
+        assertEquals("1111111111", animal.getSerialNum());
+    }
+    
+    @Test
+    void testSetSerialNum() {
+    	animal.setSerialNum("0000000001");
+        assertEquals("0000000001", animal.getSerialNum());
+    }
+    
+    @Test
+    void testGetBrand() {
+        assertEquals("Hasbro", animal.getBrand());
+    }
+    
+    @Test
+    void testSetBrand() {
+    	animal.setBrand("Nerf");
+        assertEquals("Nerf", animal.getBrand());
+    }
+    
+    @Test
+    void testGetPrice() {
+        assertEquals(12.99, animal.getPrice());
+    }
+    
+    @Test
+    void testSetPrice() {
+    	animal.setPrice(100.11);
+        assertEquals(100.11, animal.getPrice());
+    }
+    
+    @Test
+    void testGetCount() {
+        assertEquals(5, animal.getCount());
+    }
+    
+    @Test
+    void testSetCount() {
+    	animal.setCount(99);
+        assertEquals(99, animal.getCount());
+    }
+    
+    @Test
+    void testGetAgeAllowed() {
+        assertEquals(6, animal.getAgeAllowed());
+    }
+    
+    @Test
+    void testSetAgeAllowed() {
+    	animal.setAgeAllowed(12);
+        assertEquals(12, animal.getAgeAllowed());
+    }
+    
+    @Test
+    void testToyDecrement() {
+        int initialCount = animal.getCount();
+        int newCount = animal.toyDecrement();
+        assertEquals(initialCount - 1, newCount);
+        assertNotEquals(initialCount, newCount);
+    }
+    
+
 
 
 }
