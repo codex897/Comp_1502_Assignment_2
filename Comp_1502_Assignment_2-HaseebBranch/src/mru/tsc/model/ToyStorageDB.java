@@ -193,13 +193,14 @@ public class ToyStorageDB {
 		toydb.remove(toy);
 
 	}
+	
 	//this class that uses the a built in method subtracts  
 
-	public void add(Toy toy) {
-
-		toydb.add(toy);
-
-	}
+//	private void add(Toy toy) {
+//
+//		toydb.add(toy);
+//
+//	}
 	
 	public String toString() {
 		StringBuilder formattedData = new StringBuilder();
@@ -214,10 +215,10 @@ public class ToyStorageDB {
 		return formattedData.toString();
 	}
 
-	public Object findToySerialnum(String serialNumber) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+//	public Object findToySerialnum(String serialNumber) {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
 	
 	public String getToyType(String serialNum) {
 	    if (serialNum == null || serialNum.isEmpty()) {
