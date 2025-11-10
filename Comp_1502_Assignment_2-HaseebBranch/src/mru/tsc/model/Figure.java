@@ -12,7 +12,7 @@ package mru.tsc.model;
  * @author Alexander Yoseph, Lorenzo Sta Maria, Haseeb Ullah
  * @version 1.0
  * @since 2025-11-09
- * @course CIS 2230 - Mount Royal University
+ * @course COMP 1502 - Mount Royal University
  */
 public class Figure extends Toy {
 
