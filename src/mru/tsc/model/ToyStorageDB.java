@@ -9,33 +9,12 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 
-/**
- * The ToyStorageDB class serves as the main database manager for all toy objects in the system.
- * 
- * It loads toy data from a text file into an ArrayList at startup, allows modifications such as adding or removing toys,
- * and saves the updated toy list back to the file when the program exits.
- * 
- * This class also provides methods to search toys by serial number, name, or type.
- * It plays a key role as the data layer in the Toy Store Management System.
- * 
- * 
- * @author Alexander Yoseph, Lorenzo Sta Maria, Haseeb Ullah
- * @version 1.0
- * @since 2025-11-09
- * @course CIS 2230 - Mount Royal University
- */
+
 public class ToyStorageDB {
 
 	ArrayList<Toy> toydb;
 	private String FILE_PATH;
 
-	/**
-	 * Constructor for the ToyStorageDB class.
-	 * Initializes the ArrayList and stores the file path for toy data.
-	 * 
-	 * @param FILE_PATH the file path to the toy data file
-	 * @throws Exception if an error occurs while setting up the file
-	 */
 	public ToyStorageDB(String FILE_PATH) throws Exception {
 
 		toydb = new ArrayList<>(); // Ensure toydb is initialized
@@ -48,13 +27,6 @@ public class ToyStorageDB {
 	 * save the (potentially modified) list of toys back to the file on exit.
 	 */
 
-	/**
-	 * Reads the toy data from the file and adds each toy object to the ArrayList.
-	 * This method determines the toy type based on the serial number and calls
-	 * the appropriate creation method (Figure, Animal, Puzzle, or BoardGame).
-	 * 
-	 * @throws Exception if the file cannot be found or read properly
-	 */
 	public void addData() throws Exception {
 		File toyfile = new File(FILE_PATH);
 		String currentLine;
@@ -67,9 +39,7 @@ public class ToyStorageDB {
 				currentLine = fileReader.nextLine();
 				splittedLine = currentLine.split(";"); // Split the line at semi-colons
 
-//				Toy currentToy; // Change type to Toy
-				
-				
+				Toy currentToy; // Change type to Toy
 				String toyType = getToyType(splittedLine[0]);
 				
 				if(toyType.equals("Figure")) { //takes in the serial number and checks for specific type of toy
@@ -97,12 +67,6 @@ public class ToyStorageDB {
 	/*
 	 * create[Toy_TYPE] can be used for the file and user input
 	 */
-
-	/**
-	 * Creates a Figure object using data read from the file or user input and adds it to the ArrayList.
-	 * 
-	 * @param data an array containing the Figure's details
-	 */
 	public void createFigure(String[] data) {
 	    String serialNum = data[0];
 	    String name = data[1];
@@ -114,12 +78,6 @@ public class ToyStorageDB {
 
 	    toydb.add(new Figure(serialNum, name, brand, price, count, age,Character.toUpperCase(classification)));
 	}
-
-	/**
-	 * Creates an Animal object using data read from the file or user input and adds it to the ArrayList.
-	 * 
-	 * @param data an array containing the Animal's details
-	 */
 	public void createAnimal(String[] data) {
 	    String serialNum = data[0];
 	    String name = data[1];
@@ -132,12 +90,7 @@ public class ToyStorageDB {
 
 	    toydb.add(new Animal(serialNum, name, brand, price, count, age, material,Character.toUpperCase(size)));
 	}
-
-	/**
-	 * Creates a Puzzle object using data read from the file or user input and adds it to the ArrayList.
-	 * 
-	 * @param data an array containing the Puzzle's details
-	 */
+	
 	public void createPuzzle(String[] data) {
 	    String serialNum = data[0];
 	    String name = data[1];
@@ -149,12 +102,7 @@ public class ToyStorageDB {
 
 	    toydb.add( new Puzzle(serialNum, name, brand, price, count, age,Character.toUpperCase(puzzleType) ));
 	}
-
-	/**
-	 * Creates a BoardGame object using data read from the file or user input and adds it to the ArrayList.
-	 * 
-	 * @param data an array containing the BoardGame's details
-	 */
+	
 	public void createBoardGame(String[] data) {
 	    String serialNum = data[0];
 	    String name = data[1];
@@ -169,6 +117,8 @@ public class ToyStorageDB {
 
 	    toydb.add( new BoardGame(serialNum, name, brand, price, count, age, minPlayers, maxPlayers, designers));
 	}
+
+
 
 	/**
 	 * This method returns the arralyList containing all the data from the file
@@ -230,7 +180,7 @@ public class ToyStorageDB {
 	public ArrayList<Toy> compareTypeToAllToys (String type) { 
 		ArrayList<Toy> toyTypeList = new ArrayList<Toy>();
 		
-//		String currentType;
+		String currentType;
 		
 		for (Toy toy : toydb) { 									 		// read each object in list
 			if (toy.typeOf().equals(type)) toyTypeList.add(toy); 	 // if an object is a specific type then add to a list, then return that list
@@ -239,31 +189,18 @@ public class ToyStorageDB {
 		return toyTypeList;
 	}
 
-	/**
-	 * Removes a toy from the ArrayList database.
-	 * 
-	 * @param toy the toy object to be removed
-	 * @throws Exception if an error occurs while removing the toy
-	 */
 	public void removeData(Toy toy) throws Exception {
 		toydb.remove(toy);
 
 	}
-	
 	//this class that uses the a built in method subtracts  
 
-//	private void add(Toy toy) {
-//
-//		toydb.add(toy);
-//
-//	}
+	public void add(Toy toy) {
+
+		toydb.add(toy);
+
+	}
 	
-	/**
-	 * Converts all toys in the ArrayList into a formatted string representation.
-	 * Each toy’s stringToFormat method is called to generate its data line.
-	 * 
-	 * @return a formatted string of all toys in the database
-	 */
 	public String toString() {
 		StringBuilder formattedData = new StringBuilder();
 
@@ -277,17 +214,11 @@ public class ToyStorageDB {
 		return formattedData.toString();
 	}
 
-//	public Object findToySerialnum(String serialNumber) {
-//		return null;
-//	}
-
-	/**
-	 * Determines the type of toy (Figure, Animal, Puzzle, or BoardGame)
-	 * based on the first character of its serial number.
-	 * 
-	 * @param serialNum the toy’s serial number
-	 * @return the type of toy as a string, or "error" if invalid
-	 */
+	public Object findToySerialnum(String serialNumber) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
 	public String getToyType(String serialNum) {
 	    if (serialNum == null || serialNum.isEmpty()) {
 	        return "error";
@@ -322,8 +253,15 @@ public class ToyStorageDB {
 			outputFile.close();
 
 		} catch (IOException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		
+		
+		
+
+	
 			
 	}
 	
@@ -332,3 +270,4 @@ public class ToyStorageDB {
 	
 
 }
+
