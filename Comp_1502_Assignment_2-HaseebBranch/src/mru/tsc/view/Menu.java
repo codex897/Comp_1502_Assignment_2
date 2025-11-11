@@ -6,24 +6,23 @@ import mru.tsc.model.Animal;
 import mru.tsc.model.BoardGame;
 import mru.tsc.model.Figure;
 import mru.tsc.model.Puzzle;
-
+import mru.tsc.model.Toy;
 
 public class Menu {
-
 	static Scanner input;
-
+	
 	/**
-	 * Constructs a new {@code Menu} object and initializes the Scanner.
-	 */
+     * Constructor initializes the Scanner object for user input.
+     */
 	public Menu() {
 		input = new Scanner(System.in);
 	}
-
+	
+	
 	/**
-	 * Prompts the user to enter a toy name and validates that the input is not empty.
-	 * 
-	 * @return the validated toy name entered by the user
-	 */
+     * Prompts user to enter toy name and validates it is not empty.
+     * @return Validated toy name as String
+     */
 	public String askNameInput() {
 	    System.out.print("Enter Toy Name: ");
 	    String name = input.nextLine().trim();
@@ -35,13 +34,11 @@ public class Menu {
 	    }
 	    return name;
 	}
-
+	
 	/**
-	 * Prompts the user to select a toy type and validates input.
-	 * Accepts 'F' for figures, 'A' for animals, 'P' for puzzles, and 'B' for board games.
-	 * 
-	 * @return a string representing the toy type
-	 */
+     * Prompts user to enter toy type and validates input matches [F, A, P, B].
+     * @return Toy type as String (f, a, p, b)
+     */
 	public String askTypeInput() {
 	    System.out.print("Enter Toy Type || type [F] for figures, [A] for animal, [P] for puzzles, [B] for board-games: ");
 	    while(true) {
@@ -54,13 +51,13 @@ public class Menu {
 	    		tryAgain();
 	    	}
 	    }
+	   
 	}
-
+	
 	/**
-	 * Prompts the user for a toy brand and ensures the input is not empty.
-	 * 
-	 * @return the validated toy brand name
-	 */
+     * Prompts user to enter toy brand and validates it is not empty.
+     * @return Validated toy brand as String
+     */
 	public String askBrandInput() {
 	    System.out.print("Enter Toy Brand: ");
 	    String brand = input.nextLine().trim();
@@ -74,16 +71,15 @@ public class Menu {
 	}
 
 	/**
-	 * Prompts the user to enter a toy price and ensures it is a valid non-negative number.
-	 * 
-	 * @return the validated toy price
-	 */
+     * Prompts user to enter toy price and validates it is a non-negative number.
+     * @return Toy price as double
+     */
 	public double askPriceInput() {
 	    System.out.print("Enter Toy Price: ");
 	    while (true) {
 	        try {
 	            double price = input.nextDouble();
-	            input.nextLine(); 
+	            input.nextLine(); // clear the left over newline
 	            if (price >= 0) {
 	                return price;
 	            } 
@@ -94,23 +90,21 @@ public class Menu {
 	        } catch (Exception e) {
 	            System.out.print("Invalid input: Input must be a number");
 	            tryAgain();
-	            input.nextLine();
 	        }
 	        System.out.print("Enter Toy Price: ");
 	    }
 	}
 
 	/**
-	 * Prompts the user to enter the available count and validates it as a non-negative integer.
-	 * 
-	 * @return the validated available count
-	 */
+     * Prompts user to enter available toy count and validates it is non-negative.
+     * @return Available count as int
+     */
 	public int askCountInput() {
 	    System.out.print("Enter Available Count: ");
 	    while (true) {
 	        try {
 	            int count = input.nextInt();
-	            input.nextLine();
+	            input.nextLine(); // clear the left over newline
 	            if (count >= 0) {
 	                return count;
 	            } 
@@ -121,23 +115,22 @@ public class Menu {
 	        } catch (Exception e) {
 	            System.out.print("Invalid input: Input must be a number");
 	            tryAgain();
-	            input.nextLine();
+	            input.nextLine(); // clear the left over newline
 	        }
 	        System.out.print("Enter Available Count: ");
 	    }
 	}
 
-	/**
-	 * Prompts the user to enter an appropriate age and validates it as non-negative.
-	 * 
-	 * @return the validated appropriate age
-	 */
+	 /**
+     * Prompts user to enter appropriate toy age and validates it is non-negative.
+     * @return Age as int
+     */
 	public int askAgeInput() {
 	    System.out.print("Enter Appropriate Age: ");
 	    while (true) {
 	        try {
 	            int age = input.nextInt();
-	            input.nextLine();
+	            input.nextLine(); // clear the left over newline
 	            if (age >= 0) {
 	                return age;
 	            } 
@@ -148,19 +141,19 @@ public class Menu {
 	        } catch (Exception e) {
 	            System.out.print("Invalid input: Input must be a number");
 	            tryAgain();
+	            
 	        }
 	        System.out.print("Enter Appropriate Age: "); 
 	    }
 	}
 
 	/**
-	 * Prompts the user for a classification input specific to figures.
-	 * Accepts 'A' for Action, 'D' for Doll, and 'H' for Historic.
-	 * 
-	 * @return the validated classification character
-	 */
+     * Prompts user to enter toy classification and validates it matches [A, D, H].
+     * @return Classification as char
+     */
 	public char askClassificationInput() {
 	    System.out.print("Enter Appropriate classification || type [A] for action, [D] for Doll, [H] for historic: ");
+	    
 	    while (true) {
 	    	 char classification = input.nextLine().toLowerCase().charAt(0);
 		    	if(classification == 'a' || classification == 'd' || classification == 'h' ) {
@@ -174,10 +167,9 @@ public class Menu {
 	}
 
 	/**
-	 * Prompts the user for a toy material and ensures the field is not empty.
-	 * 
-	 * @return the validated material input
-	 */
+     * Prompts user to enter toy material and validates it is not empty.
+     * @return Material as String
+     */
 	public String askMaterialInput() {
 	    System.out.print("Enter Toy Material: ");
 	    String material = input.nextLine().trim();
@@ -191,10 +183,9 @@ public class Menu {
 	}
 
 	/**
-	 * Prompts the user to select a toy size: 'S' for Small, 'M' for Medium, 'L' for Large.
-	 * 
-	 * @return the validated size character
-	 */
+     * Prompts user to enter toy size and validates it matches [S, M, L].
+     * @return Size as char
+     */
 	public char askSizeInput() {
 	    System.out.print("Enter Appropriate Size || type [S] for small, [M] for medium, [L] for large: ");
 	    while(true) {
@@ -205,21 +196,21 @@ public class Menu {
 	    	else {
 	    		System.out.print ("Invalid input: enter either [S], [M], [L]");
 	    		tryAgain();
-	    	}
+	    }
+	    	
 	    }
 	}
 
 	/**
-	 * Prompts the user to enter the minimum number of players for a board game.
-	 * 
-	 * @return the validated minimum number of players
-	 */
+     * Prompts user to enter minimum number of players and validates >= 1.
+     * @return Minimum number of players as int
+     */
 	public int askMinPlayersInput() {
 	    System.out.print("Enter Minimum Number of Players: ");
 	    while (true) {
 	        try {
 	            int minNum = input.nextInt();
-	            input.nextLine();
+	            input.nextLine(); // clear the left over newline
 	            if (minNum >= 1) {
 	                return minNum;
 	            } else {
@@ -229,22 +220,22 @@ public class Menu {
 	        } catch (Exception e) {
 	            System.out.print("Invalid input: Input must be a number");
 	            tryAgain();
+	            
 	        }
 	        System.out.print("Enter Minimum Number of Players: ");
 	    }
 	}
 
 	/**
-	 * Prompts the user to enter the maximum number of players for a board game.
-	 * 
-	 * @return the validated maximum number of players
-	 */
+     * Prompts user to enter maximum number of players and validates >= 1.
+     * @return Maximum number of players as int
+     */
 	public int askMaxPlayersInput() {
 	    System.out.print("Enter Maximum Number of Players: ");
 	    while (true) {
 	        try {
 	            int maxNum = input.nextInt();
-	            input.nextLine();
+	            input.nextLine(); // clear the left over newline
 	            if (maxNum >= 1) {
 	                return maxNum;
 	            } else {
@@ -254,18 +245,17 @@ public class Menu {
 	        } catch (Exception e) {
 	            System.out.print("Invalid input: Input must be a number");
 	            tryAgain();
+	           
 	        }
 	        System.out.print("Enter Maximum Number of Players: ");
 	    }
 	}
 
 	/**
-	 * Prompts the user to enter the designer names for a board game.
-	 * Multiple names can be separated by commas.
-	 * 
-	 * @return the validated designer names
-	 */
-	public String askDesignerNamesInput() {
+     * Prompts user to enter designer names and validates it is not empty.
+     * @return Designer names as String
+     */
+	public String askDesignerNamesInput() { //should validate this i think 
 	    System.out.print("Enter Designer Names (Use ',' to separate names): ");
 	    String designers = input.nextLine().trim();
 	    while (designers.isEmpty()) {
@@ -277,149 +267,276 @@ public class Menu {
 	    return designers;
 	}
 
-	/**
-	 * Prompts the user to enter a puzzle type: 
-	 * 'M' for Mechanical, 'C' for Cryptic, 'L' for Logic, 'T' for Trivia, or 'R' for Riddle.
-	 * 
-	 * @return the validated puzzle type character
-	 */
+	 /**
+     * Prompts user to enter puzzle type and validates it matches [M, C, L, T, R].
+     * @return Puzzle type as char
+     */
 	public char askPuzzleTypeInput() {
-	    System.out.print("Enter Appropriate Puzzle-Type  || type [M] for mechanical, [C] for cryptic, [L] for logic, [T] for trivia, [R] for riddle: ");
+	    System.out.print("Enter Appropriate Puzzle-Type  || type [M] for mechanical, [C] for cryptic, [L] for logic, [T] for trivia, [R] for riddle: : ");
 	    while (true) {
 	    	 char type = input.nextLine().toLowerCase().charAt(0);
 	    	 if(type == 'm' || type == 'c' || type == 'l' || type == 't' || type == 'r' ) {
 	    		 return type;
+	    		 
 	    	 }
 	    	 else {
 	    		 System.out.print("Invalid input: enter either [M], [C], [L], [T], [R]");
 	    		 tryAgain();
+	    		
 	    	 }
 	    }
 	}
 
-	/**
-	 * Prints a "Try Again" message to prompt the user for another input attempt.
-	 */
+	 /**
+     * Prints a "Try Again" message for invalid input.
+     */
 	public void tryAgain() {
 		System.out.println(" Try Again");
 	}
 
-	/**
-	 * Prompts the user to enter a serial number or press ENTER to go back.
-	 * 
-	 * @return the serial number entered by the user
-	 */
+	 /**
+     * Prompts user for serial number (placeholder currently).
+     * @return Serial number entered by user as String
+     */
 	public String askSerialNumber() {
-		System.out.println("enter SN or [ENTER] to go back: ");
+		//please validate serial number and return value WIP
+		System.out.println("enter SN or [ENTER] to go back: "); //temporary placeholder
 		return input.nextLine();
 	}
 
 	/**
-	 * Displays a placeholder message when a toy is added.
+	 * Show successful toy-add message to user.
 	 */
 	public void toyAddMessage() {
-		// TODO Auto-generated method stub
+		System.out.println("New Toy Added!");
 	}
 
-	/**
-	 * Displays the main menu and prompts the user for an option.
-	 * 
-	 * @return the user's menu selection
-	 */
+	 /**
+     * Displays the main menu and returns user's choice.
+     * @return User option as String
+     */
 	public String displayMainMenu() {
 		System.out.println("How May We Help You?");
 		System.out.println();
+		
 		System.out.println("(1) Search Inventory and Purchase Toy");
 		System.out.println("(2) Add New Toy");
 		System.out.println("(3) Remove Toy");
 		System.out.println("(4) Gift Suggestion");
 		System.out.println("(5) Save & Exit");
 		System.out.println();
+		
 		System.out.print("Enter Option:");
-		return input.nextLine();
+		
+		String userInput = input.nextLine();
+		return userInput;
 	}
 
-	/**
-	 * Displays the save and exit message.
-	 */
+	 /**
+     * Displays saving message before program exit.
+     */
 	public void displaySaveExit() {
-		System.out.println("Saving data");
+		// TODO Auto-generated method stub
+		System.out.println("Saving data... ");
 	}
 
 	/**
-	 * Displays the toy search options and prompts the user for a search type.
-	 * 
-	 * @return the user's selection for toy search criteria
+	 * Display the "Find Toys With" sub-menu
+	 * and return a validated option ("1".."4") as a String.
+	 *
+	 * @return user's choice as "1", "2", "3", or "4"
 	 */
 	public String displayFindToys() {
-		System.out.print("choose number 1sn, 2name ,3toy type, 4");
-		this.displayBackToMainMenu();
-		return input.nextLine();
-	}
+	    System.out.println();
+	    System.out.println("Find Toys With:");
+	    System.out.println();
+	    System.out.println("(1) Serial Number(SN)");
+	    System.out.println("(2) Toy Name");
+	    System.out.println("(3) Toy Type");
+	    System.out.println("(4) Back to Main Menu");
+	    System.out.println();
+	    System.out.print("Enter Option: ");
 
+	    while (true) {
+	        String choice = input.nextLine().trim();
+	        if (choice.matches("[1-4]")) {
+	            return choice;
+	        }
+	        System.out.print("This is not a valid option! Try again. Enter Option: ");
+	    }
+	}
+	
 	/**
-	 * Displays a "Back to main menu" message.
-	 */
+     * Placeholder for going back to main menu.
+     */
 	public void displayBackToMainMenu() {
+		// TODO Auto-generated method stub
 		System.out.println("go back ");
 	}
 
 	/**
-	 * Displays an invalid option message and prompts the user to try again.
-	 */
+     * Displays message for invalid option selected.
+     */
 	public void InvalidOption() {
 		System.out.print("this is not a valid option");
 		this.tryAgain();
 	}
-
+	
 	/**
-	 * Displays a formatted list of toys.
-	 * 
-	 * @param count   the index or count of the toy in the list
-	 * @param toyList the string representation of the toy
-	 */
+     * Displays toy list with index count.
+     * @param count Index of toy
+     * @param toyList Toy information as String
+     */
 	public void displaytoylist(int count, String toyList) {
 		System.out.print(String.format("%-7s", " (" + count + ")"));
-		System.out.println(toyList);
+		
+		System.out.println(toyList);	
 	}
-
+	
 	/**
-	 * Displays a message indicating that no toys were found.
-	 */
+     * Displays message when no toy is found.
+     */
 	public void toyNotFound() {
 		System.out.print("There were no toys found");
 		this.tryAgain();
 	}
-
+	
 	/**
-	 * Prompts the user to enter an option number for purchasing a toy.
-	 * 
-	 * @return the validated option number
-	 */
-	public int enterOptionNumber() {
+     * Prompts user to enter option number for purchasing a toy and validates numeric input.
+     * @return Option number as int
+     */
+	public int enterOptionNumber() { //validate this please
+		// TODO Auto-generated method stub
 		System.out.print("Enter option Number to purchase: ");
 		while (true) {
 	        try {
 	            int option = input.nextInt();
-	            input.nextLine();
+	            input.nextLine(); // clear the left over newline
 	            return option;
+
 	        } catch (Exception e) {
 	            System.out.print("Invalid input: Input must be a number");
 	            tryAgain();
 	            input.nextLine();
+	           
 	        }
 	        System.out.print("Enter option Number to purchase: ");
 	    }
 	}
-
+	
 	/**
-	 * Prompts the user to confirm if they want to remove a toy.
-	 * 
-	 * @return {@code true} if the user types 'y', otherwise {@code false}
-	 */
+     * Asks user to confirm toy removal.
+     * @return true if user inputs "y", false otherwise
+     */
 	public boolean askToRemove() {
-		System.out.println("do you want to remove y/n?: ");
+		// TODO Auto-generated method stub
+		System.out.println("do you want to remove y/n?: "); //placeholder to call menu class
+		
 	 	if(input.nextLine().equals("y")) return true;
 	 	else return false;
+	}
+
+	/**
+	 * Tell the user that the Serial Number they tried to add is not unique.
+	 */
+	public void snNotUnique() {
+		System.out.println("SN must be unique!!");
+		this.tryAgain();
+	}
+	
+	/**
+	 * 	Tell the user that an item was removed.
+	 */
+	public void displayItemRemoved() {
+		System.out.println("Item Removed!");
+	}
+
+	/**
+	 * Pause and wait for Enter (used instead of calling input.nextLine() directly in manager)
+	 */
+	public void pressEnter() {
+		System.out.print("Press Enter to continue...");
+		input.nextLine();
+		System.out.println();
+	}
+
+	/**
+	 * Lets user know that the purchase was successful.
+	 */
+	public void purchaseSuccess() {
+		System.out.println("The transaction successfully Terminated!");
+	}
+	
+	/**
+	 * Tell the user that the requested toy is out of stock.
+	 */
+	public void outOfStock() {
+		System.out.println("Error: out of stock");
+	}
+	
+	/**
+	 * Display a single toy object.
+	 */
+	public void displaySingleToy(Toy toy) {
+		System.out.println(toy.toString());
+	}
+
+	/**
+	 * Tell the user that at least one field must be filled for gift suggestion filtering.
+	 */
+	public void atLeastOneFieldMessage() {
+		System.out.println("ERROR: at least one field must be filled out");
+	}
+
+	/**
+	 * Displays the gift suggestion results for the user.
+	 */
+	public void displayGiftSuggestionResult() {
+		System.out.println("     ==Gift Suggestion Results== \n");
+		
+	}
+
+	/**
+	 * Ask the user for an age filter for the gift suggestion.
+	 * @return String entered by the user (can be empty if skipped)
+	 */
+	public String askGiftAge() {
+	    System.out.print("For what age? | Press [ENTER] to leave blank: ");
+	    return input.nextLine().trim();
+	}
+
+	/**
+	 * Ask the user for toy type filter for the gift suggestion.
+	 * @return String entered by the user (can be empty if skipped)
+	 */
+	public String askGiftType() {
+	    System.out.print("What type of toy? | Press [ENTER] to leave blank: ");
+	    return input.nextLine().trim();
+	}
+
+	/**
+	 * Ask the user for minimum price (optional).
+	 * @return String entered by the user (can be empty if skipped)
+	 */
+	public String askMinPrice() {
+	    System.out.print("Enter minimum price | Press [ENTER] to leave blank: ");
+	    return input.nextLine().trim();
+	}
+
+	/**
+	 * Asks the user for maximum price (optional).
+	 * @return String entered by the user (can be empty if skipped)
+	 */
+	public String askMaxPrice() {
+	    System.out.print("Enter maximum price | Press [ENTER] to leave blank: ");
+	    return input.nextLine().trim();
+	}
+
+	/**
+	 * Display an error message when the minimum price is greater than the maximum price.
+	 */
+	public void displayMinMoreThanMaxError() {
+	    System.out.println("Error: minimum price cannot be greater than the maximum price.");
+	    tryAgain();
 	}
 }
