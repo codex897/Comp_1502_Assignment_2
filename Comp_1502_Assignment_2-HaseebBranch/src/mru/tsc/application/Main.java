@@ -11,7 +11,7 @@ public class Main {
 		
 		
 //		System.out.println(c.toString());
-//		c.toString(); 
+//		c.toString();
 		
 		ToyStoreManager start = new ToyStoreManager();
 	}
