@@ -75,23 +75,20 @@ public class Menu {
      * @return Toy price as double
      */
 	public double askPriceInput() {
-	    System.out.print("Enter Toy Price: ");
 	    while (true) {
+	        System.out.print("Enter Toy Price: ");
 	        try {
 	            double price = input.nextDouble();
-	            input.nextLine(); // clear the left over newline
+	            input.nextLine(); // clear leftover newline
 	            if (price >= 0) {
 	                return price;
-	            } 
-	            else {
-	                System.out.print("Invalid input: negative number");
-	                tryAgain();
+	            } else {
+	                System.out.println("Invalid input: negative number.");
 	            }
 	        } catch (Exception e) {
-	            System.out.print("Invalid input: Input must be a number");
-	            tryAgain();
+	            System.out.println("Invalid input: Input must be a number.");
+	            input.nextLine(); // clear invalid input
 	        }
-	        System.out.print("Enter Toy Price: ");
 	    }
 	}
 
