@@ -6,6 +6,9 @@ import java.util.Scanner;
 import mru.tsc.model.*;
 import mru.tsc.view.Menu;
 
+
+
+
 public class ToyStoreManager {
 
 	/**
@@ -215,11 +218,11 @@ public class ToyStoreManager {
 		
 		ArrayList<Toy> sameSNList;
 		String userSerialNumber; // can be changed to int later if needed
-		
 		while(true) { // should add try catch 
+
 			userSerialNumber =  menu.askSerialNumber(); //must validate sn
 			sameSNList = toyStorageDB.compareSNToAllToys(userSerialNumber); //a list containing an item with the same serial number
-			if (!sameSNList.isEmpty()) menu.snNotUnique(); // Calls menu class now for sn situation.
+			if (!sameSNList.isEmpty()) System.out.println("SN must be unique!!"); //placeholder to call menu class should throw error
 			else break;
 		}
 		
@@ -247,9 +250,6 @@ public class ToyStoreManager {
 			// prompts to ask for toy data to feed into a specific create[TOY TYPE] method
 			toyStorageDB.createBoardGame(askBoardGameData(userSerialNumber));
 		}
-		
-		menu.toyAddMessage();
-		menu.pressEnter();
 		
 	}
 	
@@ -352,7 +352,7 @@ public class ToyStoreManager {
 				 */
 			
 			sameSNList = toyStorageDB.compareSNToAllToys(userSerialNumber); //a list containing an item with the same serial number // null is placeholder for userinput for SN
-			if (sameSNList.isEmpty()) menu.toyNotFound(); // now calls menu class
+			if (sameSNList.isEmpty()) menu.toyNotFound(); //placeholder to call menu class
 			
 			else break;
 		}
@@ -362,10 +362,11 @@ public class ToyStoreManager {
 		if (wantToRemove) {
 			indexInDataBase = toyList.indexOf(sameSNList.get(0)); //get the object in the sameSNList and get the index for that object within the data base arraylist of toys
 			toyList.remove(indexInDataBase); //get the arraylist containing the toys and remove that toy from there
-			menu.displayItemRemoved(); //now calls the appropriate menu class menu
+			System.out.println("object removed!"); //placeholder to call menu class
 		}
 
-		menu.pressEnter();
+		System.out.println("press enter to continue"); //placeholder to call menu class
+		input.nextLine();
 		return;
 	}
 	
@@ -406,10 +407,9 @@ public class ToyStoreManager {
 	private void purchase(Toy toy) {
 		if (toy.getCount() > 0) { //probably need try catch error exception
 			toy.toyDecrement(); //if theres at least one toy available and the user wants to purchase then remove one count from the DB
-			menu.purchaseSuccess(); // now calls the menu class
-			menu.pressEnter();
+			System.out.println("Succesfully Purchased"); //temporary placeholder to call menu class
 		}
-		else menu.outOfStock();// now calls the menu class
+		else System.out.println("Error: out of stock"); //temporary placeholder to call menu class
 	}
 	
 	/**
@@ -438,7 +438,7 @@ public class ToyStoreManager {
 	 * @param singleToy A single toy that will be displayed as a Toy class
 	 */
 	private void displayToy(Toy singleToy) {
-		menu.displaySingleToy(singleToy);// now calls MENU CLASS
+		System.out.println(singleToy.toString()); // TEMPORARY PLACEHOLDER TO CALL MENU CLASS
 		
 	}
 	
@@ -462,27 +462,32 @@ public class ToyStoreManager {
 		
 		while(true) {
 			
-			ageString = menu.askGiftAge();
+			System.out.println("at least one field must be filled out"); //temporary
+			
+			System.out.println("for what age? | press [ENTER] to leave blank: ");
+			ageString = input.nextLine();
 			age = ageValidation(ageString);
 			
-			type = menu.askGiftType();
+			System.out.println("what type of toy? | press [ENTER] to leave blank: ");
+			type = input.nextLine();
 			
 			while(true) { //keep runing until minprice is less than maxprice or left blank
 				System.out.println("what price range? : ");
-				minPriceString = menu.askMinPrice();
+				System.out.println("minimum price range | press [ENTER] to leave blank: ");
+				minPriceString = input.nextLine();
 				minPrice = minPriceValidation(minPriceString);
 				
-				
-				maxPriceString = menu.askMaxPrice();
+				System.out.println("maximum price range | press [ENTER] to leave blank: ");
+				maxPriceString = input.nextLine();
 				maxPrice = maxPriceValidation(maxPriceString);
 			
-				if (minPrice != null && maxPrice != null && minPrice > maxPrice) {
-	                menu.displayMinMoreThanMaxError();
-	            } else break;
+				if(minPrice> maxPrice) 
+					System.out.println("error: minimum price cannot be more than the maximum price");
+				else break;
 			}
 			
 			if (ageString.isEmpty() && type.isEmpty() && minPriceString.isEmpty() && maxPriceString.isEmpty()) { //do this in the menu class
-				menu.atLeastOneFieldMessage(); // now calls the menu class
+				System.out.println("ERROR: at least one field must be filled out");
 			}
 			else break;
 		}
@@ -490,10 +495,19 @@ public class ToyStoreManager {
 		filteredList = toyStorageDB.compareTypeToAllToys(type);
 		if(type.isEmpty()) filteredList = toyList; //if the user chooses not to enter anything for the toy type, make sure filteredlist has all the toys
 		
-		filteredList = filterAge(filteredList, age);
-		filteredList = filterPrice(filteredList, minPrice, maxPrice);
+		filteredList = filterAge(filteredList, age); 
+		System.out.println("12");
+		filteredList = filterPrice(filteredList, minPrice, maxPrice); 
+		System.out.println("14");
 		
-		menu.displayGiftSuggestionResult(); // Now calls the menu class
+		
+		System.out.println(age);
+		System.out.println(type);
+		System.out.println(minPrice);
+		System.out.println(maxPrice);
+		
+		
+		System.out.println("     ==Gift Suggestioni Results== \n");
 		if(filteredList.isEmpty()) { //if its empty then let user know and stop this function by returning
 			menu.toyNotFound();
 			return;
